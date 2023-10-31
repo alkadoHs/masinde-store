@@ -54,7 +54,7 @@ class BranchProducts extends CI_Controller
         ];
 
         $product = $this->db->get_where('branchproduct', ['productId'=> $product_id, 'branchId' => $branch_id])->row_array();
-        if (count( $product ) > 0) {
+        if ($product) {
             $data["quantity"] += $product['inventory'];
             $data["inventory"] += $product['inventory'];
             $this->db->update("branchproduct", $data, ['productId'=> $product_id, 'branchId' => $branch_id]);
