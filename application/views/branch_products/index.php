@@ -1,7 +1,7 @@
   <?php include APPPATH . "/views/includes/header.php"?>
   <?php include APPPATH . "/views/includes/sidebar.php"?>
 
-  <main class="p-4 md:ml-64 h-auto pt-20 ">
+  <main class="p-2 lg:p-4 md:ml-64 h-auto pt-20 ">
     <section class="bg-gray-50 dark:bg-gray-900">
         
         <ul class="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400"  id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 <?php endif ?>
-                <div class="px-2 mx-auto max-w-screen-2xl lg:px-2">
+                <div class="mx-auto max-w-screen-2xl lg:px-2">
                     <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                         <div class="my-3 px-4 flex gap-3 items-center">
                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-orange-400 animate-pulse">

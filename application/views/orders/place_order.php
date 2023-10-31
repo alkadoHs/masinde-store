@@ -1,7 +1,7 @@
   <?php include APPPATH . "/views/includes/header.php"?>
   <?php include APPPATH . "/views/includes/sidebar.php"?>
 
-  <main class="p-4 md:ml-64 h-auto pt-20 ">
+  <main class="p-2 lg:p-4 md:ml-64 h-auto pt-20 ">
     <section class="bg-gray-50 dark:bg-gray-900">
 
 <p><button id="submit" type="submit">Submit form</button></p>

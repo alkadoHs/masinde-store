@@ -1,10 +1,10 @@
   <?php include APPPATH . "/views/includes/header.php"?>
   <?php include APPPATH . "/views/includes/sidebar.php"?>
 
-<main class="p-4 md:ml-64 h-auto pt-20">
+<main class="p-2 lg:p-4 md:ml-64 h-auto pt-20">
 
   <section class="bg-gray-50 dark:bg-gray-900">
-    <div class="mx-auto max-w-screen-xl px-2 lg:px-6">
+    <div class="mx-auto max-w-screen-xl lg:px-6">
         <?php if($this->session->flashdata('register_success')): ?>
               <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
                 <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
