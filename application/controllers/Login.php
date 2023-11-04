@@ -22,13 +22,28 @@ class Login extends CI_Controller
                 //verify password
                 $authenticatedUser = password_verify($password, $user->password);
                 if($authenticatedUser) {
-                    $this->session->set_userdata(["user" => $user]);
-                    echo "success";
+                    $userdata = $this->db->select("u.*, b.name as branch")
+                                 ->from("user u")
+                                 ->join("branch b", "u.branchid = b.id")
+                                 ->where("u.id", $user->id)
+                               ->get()->row();
+                    $data = [
+                        "userId" => $user->id,
+                        "username"=> $userdata->username,
+                        "firstName" => $userdata->firstName,
+                        "lastName"=> $userdata->lastName,
+                        "branchId" => $userdata->branchId,
+                        "branchName" => $userdata->branch
+                    ];
+                    $this->session->set_userdata($data);
+                    redirect('dashboard');
                 } else {
-                    echo "failed";
+                    $this->session->set_flashdata("login_failure", "Incorrect username or password");
+                    redirect('login');
                 }
             } else {
-                echo "failed user";
+                $this->session->set_flashdata("login_failure", "Incorrect username or password");
+                redirect('login');
             }
         }
     }

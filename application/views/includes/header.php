@@ -3,8 +3,190 @@
 function format_price($price) {
     return number_format($price) . "/=";
 }
+function format_date_time($date) {
+    return date('d M Y H:i:s', strtotime($date));
+}
+
+function format_date($date) {
+    return date('d M Y H:i', strtotime($date));
+}
+
+function format_date_only($date) {
+    return date('d M Y', strtotime($date));
+}
+
+function format_time_only($date) {
+    return date('H:i', strtotime($date));
+}
 
 
+// format date to show number of minutes or hours or days or weeks or months or years ago
+// function format_date_ago($date) {
+//     $time_ago = strtotime($date);
+//     $current_time = time();
+//     $time_difference = $current_time - $time_ago;
+//     $seconds = $time_difference;
+//     $minutes = round($seconds / 60); // value 60 is seconds  
+//     $hours = round($seconds / 3600); //value 3600 is 60 minutes * 60 sec  
+//     $days = round($seconds / 86400); //86400 = 24 * 60 * 60;  
+//     $weeks = round($seconds / 604800); // 7*24*60*60;  
+//     $months = round($seconds / 2629440); //((365+365+365+365+366)/5/12)*24*60*60  
+//     $years = round($seconds / 31553280); //(365+365+365+365+366)/5 * 24 * 60 * 60
+//     if ($seconds <= 60) {
+//         return "Just Now";
+//     } else if ($minutes <= 60) {
+//         if ($minutes == 1) {
+//             return "one minute ago";
+//         } else {
+//             return "$minutes minutes ago";
+//         }
+//     } else if ($hours <= 24) {
+//         if ($hours == 1) {
+//             return "an hour ago";
+//         } else {
+//             return "$hours hrs ago";
+//         }
+//     } else if ($days <= 7) {
+//         if ($days == 1) {
+//             return "yesterday";
+//         } else {
+//             return
+
+//                 "$days days ago";
+//         }
+
+//     } else if ($weeks <= 4.3) //4.3 == 52/12
+//     {
+//         if ($weeks == 1) {
+//             return "a week ago";
+//         } else {
+//             return "$weeks weeks ago";
+//         }
+//     } else if ($months <= 12) {
+//         if ($months == 1) {
+//             return "a month ago";
+//         } else {
+//             return "$months months ago";
+//         }
+//     } else {
+//         if ($years == 1) {
+//             return "one year ago";
+//         } else {
+//             return "$years years ago";
+//         }
+//     }
+// }
+
+
+function format_date_ago($date) {
+    $time_ago = strtotime($date);
+    $current_time = time();
+    $time_difference = $current_time - $time_ago;
+    $seconds = $time_difference;
+    $minutes = $seconds / 60;  
+    $hours = $minutes / 60; 
+    $days = $hours / 24; 
+    $weeks = $days / 7; 
+    $months = $days / 30.44; 
+    $years = $days / 365.25; 
+
+    if ($seconds <= 60) {
+        return "Just Now";
+    } else if ($minutes <= 60) {
+        if (floor($minutes) == 1) {
+            return "one minute ago";
+        } else {
+            return floor($minutes) . " minutes ago";
+        }
+    } else if ($hours <= 24) {
+        if (floor($hours) == 1) {
+            return "an hour ago";
+        } else {
+            return floor($hours) . " hrs ago";
+        }
+    } else if ($days <= 7) {
+        if (floor($days) == 1) {
+            return "yesterday";
+        } else {
+            return floor($days) . " days ago";
+        }
+    } else if ($weeks <= 4.3) {
+        if (floor($weeks) == 1) {
+            return "a week ago";
+        } else {
+            return floor($weeks) . " weeks ago";
+        }
+    } else if ($months <= 12) {
+        if (floor($months) == 1) {
+            return "a month ago";
+        } else {
+            return floor($months) . " months ago";
+        }
+    } else {
+        if (floor($years) == 1) {
+            return "one year ago";
+        } else {
+            return floor($years) . " years ago";
+        }
+    }
+}
+
+
+function format_date_ago_only($date) {
+    $time_ago = strtotime($date);
+    $current_time = time();
+    $time_difference = $current_time - $time_ago;
+    $seconds = $time_difference;
+    $minutes = round($seconds / 60); // value 60 is seconds  
+    $hours = round($seconds / 3600); //value 3600 is 60 minutes * 60 sec  
+    $days = round($seconds / 86400); //86400 = 24 * 60 * 60;  
+    $weeks = round($seconds / 604800); // 7*24*60*60;  
+    $months = round($seconds / 2629440); //((365+365+365+365+366)/5/12)*24*60*60  
+    $years = round($seconds / 31553280); //(365+365+365+365+366)/5 * 24 * 60 * 60
+    if ($seconds <= 60) {
+        return "Just Now";
+    } else if ($minutes <= 60) {
+        if ($minutes == 1) {
+            return "1m";
+        } else {
+            return "$minutes m";
+        }
+    } else if ($hours <= 24) {
+        if ($hours == 1) {
+            return "1h";
+        } else {
+            return "$hours h";
+        }
+    } else if ($days <= 7) {
+        if ($days == 1) {
+            return "1d";
+        } else {
+            return
+
+                "$days d";
+        } 
+
+    } else if ($weeks <= 4.3) //4.3 == 52/12
+    {
+        if ($weeks == 1) {
+            return "1w";
+        } else {
+            return "$weeks w";
+        }
+    } else if ($months <= 12) {
+        if ($months == 1) {
+            return "1m";
+        } else {
+            return "$months m";
+        }
+    } else {
+        if ($years == 1) {
+            return "1y";
+        } else {
+            return "$years y";
+        }
+    } 
+}
 ?>
 
 
@@ -17,6 +199,7 @@ function format_price($price) {
     <link rel="stylesheet" href="<?php echo base_url("assets/css/datatable.css") ?>">
     <link rel="stylesheet" href="<?php echo base_url("assets/css/select2.css") ?>">
     <link rel="stylesheet" href="<?php echo base_url("assets/css/styles.css") ?>">
+    <script src="<?php echo base_url("assets/js/jquery.js") ?>"></script>
     <style>
       .dataTables_wrapper {
         color: #94a3b8 !important;

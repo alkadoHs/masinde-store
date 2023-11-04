@@ -1,7 +1,7 @@
   <?php include APPPATH . "/views/includes/header.php"?>
   <?php include APPPATH . "/views/includes/sidebar.php"?>
 
-  <main class="p-2 lg:p-4 md:ml-64 h-auto pt-20 ">
+  <main class="py-4 px-2 lg:px-4 md:ml-64 h-auto pt-20 ">
     <section class="bg-gray-50 dark:bg-gray-900">
         
         <ul class="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400"  id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
