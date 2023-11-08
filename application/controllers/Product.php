@@ -5,6 +5,12 @@ class Product extends CI_Controller
 {
     public function index()
     {
+        $userId = $this->session->userdata("userId");
+
+        if(empty($userId)) {
+            return redirect("login");
+        }
+        
         $products = $this->db->get('product')->result();
         $this->load->view('products/add_product', ['products' => $products]);
     }

@@ -262,7 +262,7 @@
             </tr>
             <?php endforeach; ?>
         </tbody>
-        <tfoot>
+        <!-- <tfoot>
             <tr>
                 <th>AMOUNT: </th>
                 <th>Position</th>
@@ -271,7 +271,7 @@
                 <th>Start date</th>
                 <th>Salary</th>
             </tr>
-        </tfoot>
+        </tfoot> -->
     </table>
     </section>
   </main>

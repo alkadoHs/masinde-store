@@ -6,6 +6,12 @@ class PurchaseOrder extends CI_Controller
 {
     public function index()
     {
+        $userId = $this->session->userdata("userId");
+
+        if(empty($userId)) {
+            return redirect("login");
+        }
+
         $products = $this->db->get('product')->result();
         $suppliers = $this->db->get('suppliers')->result();
         
@@ -39,6 +45,7 @@ class PurchaseOrder extends CI_Controller
         $this->db->trans_start();
         $this->db->insert('purchaseorder', [
             'id' => $purchaseorder_id,
+            'branchId' => $this->input->post('branchId'),
             'supplierId' => $supplierId,
             'paid' => '0',
             'total' => '0',
@@ -53,7 +60,6 @@ class PurchaseOrder extends CI_Controller
             ]);
         }
         $this->db->trans_complete();
-        
         redirect('purchaseorder/index');
     }
 
@@ -91,13 +97,25 @@ class PurchaseOrder extends CI_Controller
         $total = $this->input->post('total');
         $paid = $this->input->post('paid');
         $status = $this->input->post('status');
+        
+        $order = $this->db->get_where('purchaseorder', ['id' => $id])->row();
 
+        $this->db->trans_start();
+        $orderItems = $this->db->get_where('purchaseorderitem', ['purchaseorderId' => $id])->result();
+        foreach($orderItems as $orderItem) {
+            $this->db->insert('newStock', ['productId' => $orderItem->productId, 'purchaseorderId'=>$orderItem->purchaseorderId, 'branchId'=>$order->branchId ,'quantity'=> $orderItem->quantity]);
+        }
         $this->db->update('purchaseorder', [
             'total' => $total,
             'paid' => $paid,
             'status' => $status,
         ], ['id' => $id]);
+        //update sales
+        $this->db->set('total', 'total - ' . $paid, false);
+        $this->db->where('branchId', $order->branchId);
+        $this->db->update('sales');
 
+        $this->db->trans_complete();
         $this->session->set_flashdata('complete_purchaseorder_success', 'The purchase order has been completed successfully!');
         redirect('purchaseorder/index');
     }
@@ -106,6 +124,12 @@ class PurchaseOrder extends CI_Controller
 
     public function credit_orders()
     {
+        $userId = $this->session->userdata("userId");
+
+        if(empty($userId)) {
+            return redirect("login");
+        }
+        
        $orders = $this->db->select('po.*, s.name as supplier_name')
                 ->from('purchaseorder po')
                 ->join('suppliers s', 's.id = po.supplierId')
@@ -124,7 +148,9 @@ class PurchaseOrder extends CI_Controller
 
     public function pay_credit_order()
     {
+        $branchId = $this->input->post('branchId');
         $id = $this->input->post('purchaseorder_id');
+
         $data = [
             'paid'=> $this->input->post('paid'),
             'total' => $this->input->post('total'),
@@ -133,9 +159,15 @@ class PurchaseOrder extends CI_Controller
         ];
         
         //increment the paid amount
-        $this->db->set('paid', 'paid + ' . $data['paid'], false);
-        $this->db->where('id', $id);
-        $this->db->update('purchaseorder');
+        $this->db->trans_start();
+            $this->db->set('paid', 'paid + ' . $data['paid'], false);
+            $this->db->where('id', $id);
+            $this->db->update('purchaseorder');
+
+            $this->db->set('total', 'total - ' . $data['paid'], false);
+            $this->db->where('branchId', $branchId);
+            $this->db->update('sales');
+        $this->db->trans_complete();
 
         $this->session->set_flashdata('pay_credit_order_success', 'The credit order has been paid successfully!');
         redirect('purchaseorder/credit_orders');

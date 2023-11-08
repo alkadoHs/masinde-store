@@ -213,7 +213,7 @@
                                                 <div class="inline-block w-4 h-4 mr-2 bg-green-700 rounded-full"></div>
                                                 <?php endif; ?>
                                                 <?php $totalStock += $branch_product->branch_inventory?>
-                                                <span><?= $branch_product->branch_inventory?></span>
+                                                <span><?= number_format($branch_product->branch_inventory)?></span>
                                             </div>
                                         </td>
                                         <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $branch_product->branch_damages ?></td>
@@ -261,7 +261,7 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th>Stock: <span class="text-orange-500 font-bold animate-pulse"><?= $totalStock ?></span></th>
+                                        <th>Stock: <span class="text-orange-500 font-bold animate-pulse"><?= number_format($totalStock) ?></span></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>

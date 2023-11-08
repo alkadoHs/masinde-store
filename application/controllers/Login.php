@@ -33,18 +33,31 @@ class Login extends CI_Controller
                         "firstName" => $userdata->firstName,
                         "lastName"=> $userdata->lastName,
                         "branchId" => $userdata->branchId,
-                        "branchName" => $userdata->branch
+                        "branchName" => $userdata->branch,
+                        "position" => $userdata->role,
                     ];
                     $this->session->set_userdata($data);
-                    redirect('dashboard');
+
+                    if($userdata->role == "ADMIN") {
+                        return redirect('dashboard');
+                    } else {
+                        return redirect('sell');
+                    }
                 } else {
                     $this->session->set_flashdata("login_failure", "Incorrect username or password");
-                    redirect('login');
+                    return redirect('login');
                 }
             } else {
                 $this->session->set_flashdata("login_failure", "Incorrect username or password");
-                redirect('login');
+                return redirect('login');
             }
         }
+    }
+
+
+    public function logout()
+    {
+        $this->session->unset_userdata(['username','userId','branchId', 'branchName','position']);
+        return redirect('login');
     }
 }

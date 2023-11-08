@@ -1,5 +1,14 @@
 <?php 
 
+$username = $this->session->userdata("username");
+$userId = $this->session->userdata("userId");
+$firstName = $this->session->userdata("firstName");
+$lastName = $this->session->userdata("lastName");
+$branchId = $this->session->userdata("branchId");
+$branchName = $this->session->userdata("branchName");
+$position =  $this->session->userdata("position");
+
+
 function format_price($price) {
     return number_format($price) . "/=";
 }
@@ -199,9 +208,10 @@ function format_date_ago_only($date) {
     <link rel="stylesheet" href="<?php echo base_url("assets/css/datatable.css") ?>">
     <link rel="stylesheet" href="<?php echo base_url("assets/css/select2.css") ?>">
     <link rel="stylesheet" href="<?php echo base_url("assets/css/styles.css") ?>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <script src="<?php echo base_url("assets/js/jquery.js") ?>"></script>
     <style>
-      .dataTables_wrapper {
+        .dataTables_wrapper {
         color: #94a3b8 !important;
         background-color: #1f2937 !important;
         padding: 1.12rem 0;
@@ -802,14 +812,14 @@ function format_date_ago_only($date) {
             <div class="py-3 px-4">
               <span
                 class="block text-sm font-semibold text-gray-900 dark:text-white"
-                >Neil Sims</span
+                ><?= $username ?></span
               >
               <span
                 class="block text-sm text-gray-900 truncate dark:text-white"
-                >name@flowbite.com</span
+                ><?= $position ?></span
               >
             </div>
-            <ul
+            <!-- <ul
               class="py-1 text-gray-700 dark:text-gray-300"
               aria-labelledby="dropdown"
             >
@@ -827,8 +837,8 @@ function format_date_ago_only($date) {
                   >Account settings</a
                 >
               </li>
-            </ul>
-            <ul
+            </ul> -->
+            <!-- <ul
               class="py-1 text-gray-700 dark:text-gray-300"
               aria-labelledby="dropdown"
             >
@@ -904,14 +914,14 @@ function format_date_ago_only($date) {
                   </svg>
                 </a>
               </li>
-            </ul>
+            </ul> -->
             <ul
               class="py-1 text-gray-700 dark:text-gray-300"
               aria-labelledby="dropdown"
             >
               <li>
                 <a
-                  href="#"
+                  href="<?= site_url('login/logout') ?>"
                   class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >Sign out</a
                 >

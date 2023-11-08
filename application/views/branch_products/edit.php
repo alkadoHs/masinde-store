@@ -16,7 +16,7 @@
                     </div>
                     <div class="w-full">
                         <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">quantity</label>
-                        <input type="number" name="quantity" id="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" value="<?= $product->quantity ?>" required="">
+                        <input type="number" name="quantity" id="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" value="<?= $product->inventory ?>" required="">
                     </div>
                     <div class="w-full">
                         <label for="damages" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Damages</label>

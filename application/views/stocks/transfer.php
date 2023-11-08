@@ -34,21 +34,7 @@
                     </svg>
                 </button>
             </div>
-        <?php else: ?>
-            <div class="flex p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
-                <svg class="flex-shrink-0 inline w-4 h-4 mr-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Info</span>
-                <div>
-                    <span class="font-medium">Kabla hujaweka oda hakikisha: </span>
-                    <ul class="mt-1.5 ml-4 list-disc list-inside">
-                        <li>Umefanya maboresho ya bei za bidhaa unazotaka kuweka oda ziendane na bei ya sasa.</li>
-                        <li>Kama bidhaa unayotaka kuweka oda haipo kwenye mfumo, nenda uakisajili kwanza.</li>
-                        <li>Kama vyote hivi viko sawa endelea kuweka oda 😎</li>
-                    </ul>
-                </div>
-            </div>
+        
         <?php endif ?>
 
 
@@ -57,40 +43,32 @@
                 <!-- Start coding here -->
                 <?php if(count($orderitems) == 0): ?>
                 <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-                    <?php echo form_open('purchaseorder/create', array('class'=> 'flex flex-col gap-4 w-full p-4')); ?>
+                    <?php echo form_open('stock/add_transfer', array('class'=> 'flex flex-col gap-4 w-full p-4')); ?>
                     <div class="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-4 shrink">
-                        <div>
-                            <label for="supplier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose Supplier</label>
-                            <select id="supplier" name="supplierId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
-                                <?php foreach($suppliers as $supplier): ?>
-                                    <option value="<?php echo $supplier->id ?>"><?php echo $supplier->name ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="branch" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose branch</label>
-                            <select id="branch" name="branchId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
-                                <option value="0">--select--</option>
-                                <option value="1">MAIN STORE</option>
-                                    <option value="2">UYOLE SHOP</option>
-                                    <option value="3">MBALIZI STORE</option>
-                            </select>
-                        </div>
                         <div class="relative w-full">
-                            <label for="supplier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Products</label>
-                            <select name="order_items[]" class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" style="width: 100%" id="select2" multiple="true">
+                            <label for="select2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Products</label>
+                            <select name="product[]" class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" style="width: 100%" id="select2" multiple="true">
                                 <?php foreach($products as $product): ?>
                                     <option value="<?php echo $product->id ?>"><?php echo $product->name ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div>
+                            <label for="toBranchId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Transfer To</label>
+                            <select id="toBranchId" name="toBranchId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                                <option value="0">--select--</option>
+                                <option value="2">UYOLE SHOP</option>
+                                <option value="3">MBALIZI STORE</option>
+                            </select>
+                        </div>
+                        
                     </div>
 
                     <button type="submit" class="flex items-center inset-0 m-auto w-fit h-fit justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800">
                         <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
-                        Add to order
+                       Addd Transfer
                     </button>
                 <?php echo form_close() ?>
             </div>
@@ -121,7 +99,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                                     </svg>
-                                    Calculate Price
+                                    Transfer
                                 </button>
                             </div>
                         </div>
@@ -131,10 +109,7 @@
                                     <tr>
                                         <th scope="col" class="px-4 py-3">PRODUCT NAME</th>
                                         <th scope="col" class="px-4 py-3">BRAND</th>
-                                        <th scope="col" class="px-4 py-3">SUPPLIER</th>
-                                        <th scope="col" class="px-4 py-3">BUYING PRICE</th>
                                         <th scope="col" class="px-4 py-3">QUANTITY</th>
-                                        <th scope="col" class="px-4 py-3">PRICE</th>
                                         <th scope="col" class="px-4 py-3">
                                             CANCEL
                                         </th>
@@ -145,19 +120,14 @@
                                     <?php $orderId = null; ?>
                                     <?php foreach($orderitems as $orderitem): ?>
                                     <tr class="border-b dark:border-gray-700">
-                                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $orderitem->product_name ?></th>
-                                        <td class="px-4 py-3">brand</td>
-                                        <td class="px-4 py-3"><?= $orderitem->supplier_name ?></td>
-                                        <td class="px-4 py-3"><?= $orderitem->buyPrice ?></td>
+                                        <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $orderitem->name ?></th>
+                                        <td class="px-4 py-3"><?= $orderitem->brand ?></td>
                                         <td class="px-4 py-3">
-                                            <input type="hidden" name="order_item_id[]" value="<?= $orderitem->id ?>">
+                                            <input type="hidden" name="id[]" value="<?= $orderitem->id ?>">
                                             <input type="number" name="quantity[]" value="<?= $orderitem->quantity ?>" id="quantity" class="bg-gray-50 border max-w-[100px] min-w-[80px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
                                         </td>
-                                        <?php $orderId = $orderitem->purchaseorderId ?>
-                                        <?php $totalPrice += ($orderitem->buyPrice * $orderitem->quantity);?>
-                                        <td class="px-4 py-3"><?= format_price($orderitem->buyPrice * $orderitem->quantity) ?></td>
                                         <td class="px-4 py-3 flex items-center justify-end">
-                                            <a href="<?= site_url('purchaseorder/cancel_order/'.$orderitem->id) ?>" type="button" class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
+                                            <a href="<?= site_url('stock/cancel_transfer/'.$orderitem->id) ?>" type="button" class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                 </svg>
@@ -169,37 +139,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-                            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                               
-                            </span>
-
-                            <?php echo form_open("purchaseorder/complete_order")?>
-                            <input type="hidden" name="purchaseorderId" value="<?= $orderId ?>">
-                            <input type="hidden" name="status" value="complete">
-                            <ul class="flex flex-col gap-3">
-                                <li class="flex gap-3">
-                                    <span class="text-xl text-slate-100"> Tota Price: </span>  
-                                    <input type="hidden" name="total" value="<?= $totalPrice ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
-                                    <span class="text-green-400 text-xl font-bold">
-                                        <?= format_price($totalPrice) ?>
-                                    </span> 
-                                </li>
-                                <li class="flex gap-3">
-                                    <span class="text-xl text-slate-100"> Pay </span>  
-                                    <input type="number" name="paid" value="0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                </li>
-                                <li class="w-full flex justify-end">
-                                    <button id="completeOrderBtn" type="submit" class="flex items-center justify-center text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                    </svg>
-                                    Complete Order
-                                </button>
-                                </li>
-                            </ul>
-                            <?php echo form_close()?>
-                        </nav>
                     </div>
                 </div>
                 </section>
@@ -214,7 +153,7 @@
       var formData = $('#productTable :input').serializeArray();
       console.log('Data to be sent:', formData);
       $.ajax({
-         url: 'update_order/',
+         url: 'complete_transfer/',
          type: 'POST',
          data: formData,
          success: function(response) {

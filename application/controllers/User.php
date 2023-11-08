@@ -7,6 +7,12 @@ class User extends CI_Controller
 
     public function register_index()
     {
+        $userId = $this->session->userdata("userId");
+
+        if(empty($userId)) {
+            return redirect("login");
+        }
+        
         $users = $this->db->select("u.name, u.role, u.username, b.name as branchName")
                     ->from("user u")
                     ->join("branch b", "u.branchId = b.id")
@@ -33,7 +39,7 @@ class User extends CI_Controller
 
         if( $this->form_validation->run()) {
             $uuid = Uuid::uuid4()->toString();
-             $password = $this->input->post("password");
+            $password = $this->input->post("password");
             $hash = password_hash($password, PASSWORD_BCRYPT, ["cost" => 12]);
             $data = [
                 "id" => $uuid,
