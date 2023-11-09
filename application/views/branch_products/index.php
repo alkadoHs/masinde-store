@@ -71,14 +71,14 @@
                         </div>
                         <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
                             <div class="flex items-center flex-1 space-x-4">
-                                <h5>
+                                <!-- <h5>
                                     <span class="text-gray-500">All Products:</span>
                                     <span class="dark:text-white">123456</span>
                                 </h5>
                                 <h5>
                                     <span class="text-gray-500">Total sales:</span>
                                     <span class="dark:text-white">$88.4k</span>
-                                </h5>
+                                </h5> -->
                             </div>
                             <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
                                 <button type="button"  id="createProductButton" data-modal-toggle="createProductModal" class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800">
