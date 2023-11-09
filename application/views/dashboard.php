@@ -36,7 +36,7 @@
 
 
       <div
-        class="rounded-lg p-3 shadow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-96 mb-4"
+        class="rounded-lg p-3 shadow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-fit mb-4"
       >
       <p class="text-xl text-slate-200 mb-3">Top selling products </p>
               <div class="relative overflow-x-auto overflow-y-auto">
@@ -77,7 +77,7 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         <div
-          class="rounded-lg p-3 bg-zinc-900 shadow-2xl border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="rounded-lg p-3 bg-zinc-900 shadow-2xl border-gray-300 dark:border-gray-600 h-fit"
         >
             <p class="text-xl text-slate-200 mb-3">-Today sales per staff </p>
               <div class="relative overflow-x-auto overflow-y-auto">
@@ -110,7 +110,7 @@
 
 
         <div
-          class="rounded-lg p-3 bg-zinc-900 shadow-2xl border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="rounded-lg p-3 bg-zinc-900 shadow-2xl border-gray-300 dark:border-gray-600 h-fit"
         >
         <p class="text-xl text-slate-200 mb-3">-Today Expenses per staff </p>
               <div class="relative overflow-x-auto overflow-y-auto">
@@ -144,7 +144,7 @@
 
 
         <div
-          class="rounded-lg p-3 shandow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="rounded-lg p-3 shandow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-fit"
         >
           <p class="text-xl text-slate-200 mb-3">- Sales Per Branch </p>
               <div class="relative overflow-x-auto overflow-y-auto">
@@ -178,7 +178,7 @@
 
         
         <div
-          class="rounded-lg p-3 shadow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="rounded-lg p-3 shadow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-fit"
         >
           <p class="text-xl text-slate-200 mb-3">Monthly Expenses per Staff </p>
               <div class="relative overflow-x-auto overflow-y-auto">
@@ -228,20 +228,20 @@
 
       <div class="grid grid-cols-2 gap-4">
         <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
         ></div>
 
         <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
         ></div>
 
 
         <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
         ></div>
 
         <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-48 md:h-72"
+          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
         ></div>
       </div> -->
     </main>
