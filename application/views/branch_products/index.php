@@ -105,7 +105,7 @@
                                                 </button>
                                             </div>
                                             <!-- Modal body -->
-                                            <?php echo form_open("branchproducts/create") ?>
+                                            <?php echo form_open("branchProducts/create") ?>
                                                 <div class="grid gap-4 mb-4 sm:grid-cols-1">
                                                     <div class="w-full">
                                                         <label for="productId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select product</label>

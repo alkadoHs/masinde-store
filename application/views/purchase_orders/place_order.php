@@ -57,7 +57,7 @@
                 <!-- Start coding here -->
                 <?php if(count($orderitems) == 0): ?>
                 <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-                    <?php echo form_open('purchaseorder/create', array('class'=> 'flex flex-col gap-4 w-full p-4')); ?>
+                    <?php echo form_open('purchaseOrder/create', array('class'=> 'flex flex-col gap-4 w-full p-4')); ?>
                     <div class="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-4 shrink">
                         <div>
                             <label for="supplier" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose Supplier</label>
@@ -174,7 +174,7 @@
                                
                             </span>
 
-                            <?php echo form_open("purchaseorder/complete_order")?>
+                            <?php echo form_open("purchaseOrder/complete_order")?>
                             <input type="hidden" name="purchaseorderId" value="<?= $orderId ?>">
                             <input type="hidden" name="status" value="complete">
                             <ul class="flex flex-col gap-3">

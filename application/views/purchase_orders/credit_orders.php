@@ -90,7 +90,7 @@
                                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= format_price($order->total - $order->paid) ?></td>
                                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= format_date($order->createdAt) ?></td>
                                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <?php echo form_open("purchaseorder/pay_credit_order", ["class" =>"flex gap-3"]) ?> 
+                                        <?php echo form_open("purchaseOrder/pay_credit_order", ["class" =>"flex gap-3"]) ?> 
                                              <input type="hidden" name="purchaseorder_id" value="<?= $order->id ?>">
                                              <input type="hidden" name="branchId" value="<?= $order->branchId ?>">
                                             <input type="hidden" name="supplierId" value="<?= $order->supplierId ?>"> 
