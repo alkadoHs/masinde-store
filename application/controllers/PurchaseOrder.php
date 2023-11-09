@@ -58,7 +58,7 @@ class PurchaseOrder extends CI_Controller
             ]);
         }
         $this->db->trans_complete();
-        redirect('purchaseorder/index');
+        redirect('purchaseOrder/index');
     }
 
 
@@ -66,7 +66,7 @@ class PurchaseOrder extends CI_Controller
     {
         $this->db->delete('purchaseorderitem', ['id' => $id]);
         $this->session->set_flashdata('purchaseorderitem_canceled', 'The purchase order item has been canceld!');
-        redirect('purchaseorder/index');
+        redirect('purchaseOrder/index');
     }
 
 
@@ -115,7 +115,7 @@ class PurchaseOrder extends CI_Controller
 
         $this->db->trans_complete();
         $this->session->set_flashdata('complete_purchaseorder_success', 'The purchase order has been completed successfully!');
-        redirect('purchaseorder/index');
+        redirect('purchaseOrder/index');
     }
 
 
@@ -168,7 +168,7 @@ class PurchaseOrder extends CI_Controller
         $this->db->trans_complete();
 
         $this->session->set_flashdata('pay_credit_order_success', 'The credit order has been paid successfully!');
-        redirect('purchaseorder/credit_orders');
+        redirect('purchaseOrder/credit_orders');
     }
 
 

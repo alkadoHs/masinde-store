@@ -50,11 +50,11 @@ class BranchProducts extends CI_Controller
             $this->db->update("branchproduct", $data, ['productId'=> $product_id, 'branchId' => $branch_id]);
             $this->session->set_flashdata("update_branchproduct_success', 'Product is updated successfully!");
             
-            redirect('branchproducts/index/'.$branch_id);
+            redirect('branchProducts/index/'.$branch_id);
         } else {
             $this->db->insert("branchproduct", $data);
             $this->session->set_flashdata("create_branchproduct_success", "New stock is added successfully!" );
-            redirect('branchproducts/index/'.$branch_id);
+            redirect('branchProducts/index/'.$branch_id);
         }
 
     }
@@ -89,7 +89,7 @@ class BranchProducts extends CI_Controller
 
         $this->session->set_flashdata("update_branchproduct_success', 'Product is updated successfully!");
         
-        redirect('branchproducts/index/'.$branch_id);
+        redirect('branchProducts/index/'.$branch_id);
     }
 
 
@@ -97,7 +97,7 @@ class BranchProducts extends CI_Controller
     {
         $this->db->delete("branchproduct", ["id" => $id]);
         $this->session->set_flashdata("delete_branchproduct_success", "Product is deleted successfully!");
-        redirect('branchproducts/index/'.$branch_id);
+        redirect('branchProducts/index/'.$branch_id);
     }
     
 }
