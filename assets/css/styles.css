@@ -2182,6 +2182,10 @@ input:checked + .toggle-bg {
   padding-top: 1.25rem;
 }
 
+.pb-28 {
+  padding-bottom: 7rem;
+}
+
 .text-left {
   text-align: left;
 }
