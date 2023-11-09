@@ -21,7 +21,7 @@
           class="rounded-lg shadow-2xl p-4  bg-zinc-900 dark:border-gray-600 h-32 md:h-36"
         >
           <p class="text-slate-100 text-xl">Expenses </p>
-          <p class="text-xl text-orange-500">-Tsh <?= format_price($expensesToday) ?></p>
+          <p class="text-xl text-orange-500">Tsh <?= format_price($expensesToday) ?></p>
       </div>
 
 
@@ -146,7 +146,7 @@
         <div
           class="rounded-lg p-3 shandow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-fit"
         >
-          <p class="text-xl text-slate-200 mb-3">- Sales Per Branch </p>
+          <p class="text-xl text-slate-200 mb-3">- Balance per branch </p>
               <div class="relative overflow-x-auto overflow-y-auto">
                   <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -155,7 +155,7 @@
                                   BRANCH
                               </th>
                               <th scope="col" class="px-6 py-3">
-                                  AMOUNT SOLD
+                                  BALANCE
                               </th>
                           </tr>
                       </thead>

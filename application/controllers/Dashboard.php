@@ -32,7 +32,7 @@ class Dashboard extends CI_Controller
                                   ->join('branchproduct bp', 'oi.branchProductId = bp.id')
                                   ->join('product p', 'bp.productId = p.id')
                                   ->group_by('oi.branchProductId')
-                                  ->order_by('totalSales')
+                                  ->order_by('totalSales', 'DESC')
                                   ->limit(10)
                                 ->get()->result();
 
