@@ -1,8 +1,5 @@
 <?php
 
-use Ramsey\Uuid\Uuid;
-
-
 class Sell extends CI_Controller
 {
     public function index()
@@ -20,7 +17,7 @@ class Sell extends CI_Controller
         $cartItems = $this->db->select("ci.*, p.name")
                             ->from("cart c")
                                 ->join("cartitem ci","ci.cartId = c.id")
-                                ->join("branchProduct bp","bp.id = ci.branchProductId")
+                                ->join("branchproduct bp","bp.id = ci.branchProductId")
                                 ->join("product p","p.id = bp.productId")
                             ->where("c.userId", $this->session->userdata("userId"))
                         ->get()->result();
@@ -43,13 +40,13 @@ class Sell extends CI_Controller
 
     public function create_cart($product_id, $price)
     {
-        $productStock = $this->db->get_where('branchProduct', ['id' => $product_id])->row();
+        $productStock = $this->db->get_where('branchproduct', ['id' => $product_id])->row();
         if($productStock->inventory < 1) {
             return redirect('sell');
         }
         $cartExist = $this->db->get_where('cart', ['userId' => $this->session->userdata('userId')])->row();
         if (!$cartExist) {
-        $cartId = Uuid::uuid4()->toString();
+        $cartId = uniqid('MS-');
 
         $userId = $this->session->userdata("userId");
 
@@ -102,7 +99,7 @@ class Sell extends CI_Controller
 
     public function complete_order()
     {
-        $orderId = Uuid::uuid4()->toString();
+        $orderId = uniqid('INV-');
 
         $cartId = $this->input->post("cartId");
         $branchId = $this->session->userdata("branchId");
@@ -128,7 +125,7 @@ class Sell extends CI_Controller
         $cartItems = $this->db->get_where('cartitem', ['cartId' => $cartId])->result();
             $this->db->insert('order', $data);
             foreach ($cartItems as $cartItem) {
-                $branchProduct = $this->db->get_where('branchProduct', ['id' => $cartItem->branchProductId, 'branchId' => $branchId])->row();
+                $branchProduct = $this->db->get_where('branchproduct', ['id' => $cartItem->branchProductId, 'branchId' => $branchId])->row();
                 //if stock available is less than cartItem quantity  return
                 if($branchProduct->inventory < $cartItem->quantity) {
                     $this->db->delete('order', ['id' => $orderId]);
@@ -137,7 +134,7 @@ class Sell extends CI_Controller
                 }
                 $this->db->insert("orderitem", ['order_id' => $orderId,'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
                 $newInventory = $branchProduct->inventory - $cartItem->quantity;
-                $this->db->update('branchProduct', ['inventory' => $newInventory], ['id' => $branchProduct->id, 'branchId'=> $branchId]);
+                $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $branchProduct->id, 'branchId'=> $branchId]);
             }
             
             $this->db->set('total', 'total + ' . $data['amountPaid'], false);

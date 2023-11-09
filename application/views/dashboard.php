@@ -75,7 +75,7 @@
       </div>
 
 
-      <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         <div
           class="rounded-lg p-3 bg-zinc-900 shadow-2xl border-gray-300 dark:border-gray-600 h-48 md:h-72"
         >

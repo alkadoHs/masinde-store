@@ -1,7 +1,5 @@
 <?php
 
-use Ramsey\Uuid\Uuid;
-
 class PurchaseOrder extends CI_Controller
 {
     public function index()
@@ -40,7 +38,7 @@ class PurchaseOrder extends CI_Controller
     {
         $orderItems = $this->input->post('order_items');
         $supplierId = $this->input->post('supplierId');
-        $purchaseorder_id = Uuid::uuid4()->toString();
+        $purchaseorder_id = uniqid('INV-');
 
         $this->db->trans_start();
         $this->db->insert('purchaseorder', [
@@ -103,7 +101,7 @@ class PurchaseOrder extends CI_Controller
         $this->db->trans_start();
         $orderItems = $this->db->get_where('purchaseorderitem', ['purchaseorderId' => $id])->result();
         foreach($orderItems as $orderItem) {
-            $this->db->insert('newStock', ['productId' => $orderItem->productId, 'purchaseorderId'=>$orderItem->purchaseorderId, 'branchId'=>$order->branchId ,'quantity'=> $orderItem->quantity]);
+            $this->db->insert('newstock', ['productId' => $orderItem->productId, 'purchaseorderId'=>$orderItem->purchaseorderId, 'branchId'=>$order->branchId ,'quantity'=> $orderItem->quantity]);
         }
         $this->db->update('purchaseorder', [
             'total' => $total,

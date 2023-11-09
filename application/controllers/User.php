@@ -1,7 +1,5 @@
 <?php
 
-use Ramsey\Uuid\Uuid;
-
 class User extends CI_Controller
 {
 
@@ -38,7 +36,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules("confirmPassword", "Confirm Password", "trim|required|matches[password]");
 
         if( $this->form_validation->run()) {
-            $uuid = Uuid::uuid4()->toString();
+            $uuid = uniqid('ID-');
             $password = $this->input->post("password");
             $hash = password_hash($password, PASSWORD_BCRYPT, ["cost" => 12]);
             $data = [

@@ -4,7 +4,7 @@ class Stock extends CI_Controller {
     public function index()
     {
         $order = $this->db->select('ns.*, p.name as product_name')
-                   ->from('newStock ns')
+                   ->from('newstock ns')
                     ->join('product p', 'p.id = ns.productId')
                     ->where('ns.branchId', $this->session->userdata('branchId'))
                    ->where('ns.status', 'pending')
@@ -28,7 +28,7 @@ class Stock extends CI_Controller {
 
         for($i = 0; $i < count($ids); $i++) {
             $this->db->trans_start();
-                $this->db->update('newStock', ['quantity2' => $quantities[$i], 'status' => 'approved', 'userId' => $userId], ['id' => $ids[$i]]);
+                $this->db->update('newstock', ['quantity2' => $quantities[$i], 'status' => 'approved', 'userId' => $userId], ['id' => $ids[$i]]);
             $this->db->trans_complete();
         }
 
@@ -44,7 +44,7 @@ class Stock extends CI_Controller {
      public function approved_orders()
     {
         $order = $this->db->select('ns.*, p.name as product_name, b.name as branch, u.username as seller')
-                   ->from('newStock ns')
+                   ->from('newstock ns')
                     ->join('product p', 'p.id = ns.productId')
                     ->join('branch b', 'ns.branchId = b.id')
                     ->join('user u','ns.userId = u.id')
@@ -73,11 +73,11 @@ class Stock extends CI_Controller {
 
         for($i = 0; $i < count($ids); $i++) {
             $this->db->trans_start();
-                $newStock = $this->db->get_where('newStock', ['id' => $ids[$i]])->row();
+                $newStock = $this->db->get_where('newstock', ['id' => $ids[$i]])->row();
                 $product1 = $this->db->get_where('product', ['id' => $newStock->productId])->row();
                 $product1branch = $this->db->get_where('branch', ['id' => $newStock->branchId])->row();
                 $product = $this->db->select('bp.id, bp.quantity, bp.quantity, bp.inventory, p.name')
-                                      ->from('branchProduct bp')
+                                      ->from('branchproduct bp')
                                       ->join('product p', 'bp.productId = p.id')
                                       ->where('bp.branchId', $newStock->branchId)
                                       ->where('bp.productId', $newStock->productId)
@@ -86,12 +86,12 @@ class Stock extends CI_Controller {
                 if($product) {
                     $newInventory = $product->inventory + $newStock->quantity2;
                     //update the stock
-                    $this->db->update('branchProduct', ['quantity' => $newInventory, 'inventory' => $newInventory], ['id'=> $product->id]);
+                    $this->db->update('branchproduct', ['quantity' => $newInventory, 'inventory' => $newInventory], ['id'=> $product->id]);
                 } else {
                     $this->session->set_flashdata('product_not_availabele', "Bidhaa ya <b>$product1->name </b> ni mpya kwenye <b>$product1branch->name</b>, hakikisha kwanza umeisajili kwenye hii branch halafu urudi tena kukonfemu.");
                     break;
                 }
-                $this->db->update('newStock', ['status' => 'confirmed'], ['id' => $ids[$i]]);
+                $this->db->update('newstock', ['status' => 'confirmed'], ['id' => $ids[$i]]);
             $this->db->trans_complete();
         }
 
@@ -124,7 +124,7 @@ class Stock extends CI_Controller {
         
         $order = $this->db->select("tp.*, p.name, p.brand")
                    ->from('transferedproduct tp')
-                   ->join('branchproduct bp', 'tp.branchproductId = bp.id')
+                   ->join('branchproduct bp', 'tp.branchProductId = bp.id')
                    ->join('product p', 'bp.productId = p.id')
                    ->where('tp.status', 'pending')
                 ->get()->result();
@@ -192,7 +192,7 @@ class Stock extends CI_Controller {
 
         $items = $this->db->select("tp.*, b.name as from, p.name, p.brand, tp.quantity")
                           ->from("transferedproduct tp")
-                            ->join("branchProduct bp", "tp.branchProductId = bp.id")
+                            ->join("branchproduct bp", "tp.branchProductId = bp.id")
                             ->join("product p", "bp.productId = p.id")
                             ->join("branch b", "tp.fromBranchId = b.id")
                           ->where("tp.status", "transfered")
