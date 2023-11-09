@@ -80,7 +80,7 @@
                                         </div>
                                         <div>
                                             <label for="branchId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Branch</label>
-                                            <select id="branchId" name="branchId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                                            <select id="branchId" name="branchId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" required>
                                                 <option selected="">Select branch</option>
                                                 <?php foreach($branches as $branch): ?>
                                                 <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
@@ -89,7 +89,7 @@
                                         </div>
                                         <div>
                                             <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role(Position)</label>
-                                            <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500">
+                                            <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" required>
                                                 <option selected="">Select staff role</option>
                                                 <option value="ADMIN">ADMIN</option>
                                                 <option value="SELLER">SELLER</option>
