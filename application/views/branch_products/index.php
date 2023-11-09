@@ -6,13 +6,13 @@
         
         <ul class="text-sm font-medium text-center text-gray-500 divide-x divide-gray-200 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400"  id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
             <li class="w-full" role="presentation">
-                <a href="<?= site_url("branchproducts/index/1") ?>" class="inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page" id="mainstore-tab" data-tabs-target="#mainstore" type="button" role="tab" aria-controls="mainstore" aria-selected="false">MAIN STORE</a>
+                <a href="<?= site_url("branchProducts/index/1") ?>" class="inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page" id="mainstore-tab" data-tabs-target="#mainstore" type="button" role="tab" aria-controls="mainstore" aria-selected="false">MAIN STORE</a>
             </li>
             <li class="w-full" role="presentation">
-                <a href="<?= site_url("branchproducts/index/2") ?>" class="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" >UYOLE SHOP</a>
+                <a href="<?= site_url("branchProducts/index/2") ?>" class="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" >UYOLE SHOP</a>
             </li>
             <li class="w-full" role="presentation">
-                <a href="<?= site_url("branchproducts/index/3") ?>" class="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">MBALIZI</a>
+                <a href="<?= site_url("branchProducts/index/3") ?>" class="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">MBALIZI</a>
             </li>
         </ul>
 
@@ -243,7 +243,7 @@
                                         <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= format_price($branch_product->wholePrice * $branch_product->branch_inventory) ?></td>
                                          <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div class="flex items-center space-x-4">
-                                            <a href="<?= site_url("branchproducts/edit/".$branch_product->branch_product_id."/".$branch_product->name)  ?>" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-sky-700 rounded-lg hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
+                                            <a href="<?= site_url("branchProducts/edit/".$branch_product->branch_product_id."/".$branch_product->name)  ?>" class="py-2 px-3 flex items-center text-sm font-medium text-center text-white bg-sky-700 rounded-lg hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                     <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                                     <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
