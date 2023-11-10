@@ -80,6 +80,14 @@ class Sell extends CI_Controller
     }
 
 
+    public function cancel_item($item_id)
+    {
+        $this->db->where('id', $item_id);
+        $this->db->delete('cartitem');
+        redirect('sell');
+    }
+
+
     public function update_cart()
     {
         $quantities = $this->input->post('quantity');

@@ -48,6 +48,7 @@
                     <th class="text-orange-500 text-start p-4">PRICE</th>
                     <th class="text-orange-500 text-start p-4">QUANTITY</th>
                     <th class="text-orange-500 text-start p-4">TOTAL</th>
+                    <th class="text-orange-500 text-start p-4">CANCEL</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,14 @@
                             </td>
                             <?php $overAllPrice += ($item->price * $item->quantity) ?>
                             <td class="text-slate-300 p-3"><?= format_price($item->price * $item->quantity) ?></td>
+                            <td class="px-4 py-3 flex items-center justify-end">
+                                <a href="<?= site_url('sell/cancel_item/'.$item->id) ?>" type="button" class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800 dark:hover:bg-red-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    <span class="sr-only">cancel cart item</span>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
