@@ -30,6 +30,13 @@ class Product extends CI_Controller
         redirect('Product/index');
     }
 
+    public function edit($id) 
+    {
+        $product = $this->db->get_where('product', ['id'=> $id])->row();
+        $this->load->view('products/edit_product', ['product'=> $product]);
+
+    }
+
 
     public function update()
     {
