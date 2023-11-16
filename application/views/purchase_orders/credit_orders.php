@@ -113,7 +113,7 @@
                             <span class="font-semibold text-gray-900 dark:text-white">1000</span> -->
                         </span>
                         <ul class="inline-flex items-stretch -space-x-px">
-                            <li class="text-xl text-slate-200"> Total Dept: <span class="text-green-400 font-bold"><?= format_price($totaldept) ?></span></li>
+                            <li class="text-xl"> Total Dept: <span class="text-green-400 font-bold"><?= format_price($totaldept) ?></span></li>
                         </ul>
                     </nav>
                 </div>

@@ -201,7 +201,7 @@ function format_date_ago_only($date) {
 
 
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -212,8 +212,6 @@ function format_date_ago_only($date) {
     <script src="<?php echo base_url("assets/js/jquery.js") ?>"></script>
     <style>
         .dataTables_wrapper {
-        color: #94a3b8 !important;
-        background-color: #1f2937 !important;
         padding: 1.12rem 0;
         border-radius: 10px;
         overflow-y: auto;

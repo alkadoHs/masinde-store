@@ -64,7 +64,7 @@
         <br>
         <br>
 
-         <table id="example" class="display text-slate-200" style="width:100%">
+         <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>S/N</th>
