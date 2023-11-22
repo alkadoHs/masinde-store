@@ -99,14 +99,6 @@
                                 <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Type product name" required="">
                             </div>
                             <div>
-                                <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-                                <input type="text" name="brand" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Product brand (optional)" >
-                            </div>
-                            <div>
-                                <label for="unit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Unit</label>
-                                <input type="text" name="unit" id="unit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="optional">
-                            </div>
-                            <div>
                                 <label for="buyPrice" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Buying Price</label>
                                 <input type="number" name="buyPrice" id="buyPrice" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="" required="">
                             </div>
@@ -132,14 +124,12 @@
        <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>S/N</th>
-                <th>PRODUCT NAME</th>
-                <th>BRAND</th>
-                <th>UNIT</th>
-                <th>BUYING PRICE</th>
-                <th>RETAIL PRICE</th>
-                <th>WHOLE PRICE</th>
-                <th>ACTION</th>
+                <th style="font-weight: 400; font-size: small">S/N</th>
+                <th style="font-weight: 400; font-size: small">PRODUCT NAME</th>
+                <th style="font-weight: 400; font-size: small">BUYING PRICE</th>
+                <th style="font-weight: 400; font-size: small">RETAIL PRICE</th>
+                <th style="font-weight: 400; font-size: small">WHOLE PRICE</th>
+                <th style="font-weight: 400; font-size: small">ACTION</th>
             </tr>
         </thead>
         <tbody>
@@ -148,8 +138,6 @@
             <tr>
                 <td><?= $rowId < 10 ? "0".$rowId++ : $rowId++ ?></td>
                 <td><?= $product->name ?></td>
-                <td><?= $product->brand ? $product->brand : '--//--' ?></td>
-                <td><?= $product->unit ? $product->unit : '--//--' ?></td>
                 <td><?= number_format($product->buyPrice) ?></td>
                 <td><?= number_format($product->retailPrice) ?></td>
                 <td><?= number_format($product->wholePrice) ?></td>

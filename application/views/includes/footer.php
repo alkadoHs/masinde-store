@@ -20,6 +20,27 @@
             width: 'resolve'
         });
     });
+
+
+    $(document).ready(function() {
+        $('#switchBranch').on('change', function() {
+            var branchId = $('#switchBranch').val()
+            var userId = "<?= $userId ?>";
+            console.log("Data sent:", { branch: branchId, user: userId })
+
+            $.ajax({
+                url: "<?= site_url('user/switchBranch') ?>",
+                type: 'POST',
+                data: { branch: branchId, user: userId },
+                success: function(response) {
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error('Error updating data:', error);
+                }
+            });
+        })
+    })
 </script>
 
 </body>

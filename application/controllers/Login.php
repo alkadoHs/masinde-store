@@ -41,7 +41,7 @@ class Login extends CI_Controller
                     if($userdata->role == "ADMIN") {
                         return redirect('dashboard');
                     } else {
-                        return redirect('sell');
+                        return redirect('mysales');
                     }
                 } else {
                     $this->session->set_flashdata("login_failure", "Incorrect username or password");

@@ -30,25 +30,25 @@
         <div class="grid mb-3 md:flex md:justify-between md:items-center md:mb-0">
             <div>
                 <h2 class="text-xl font-semibold text-slate-700 my-3 flex gap-2">
-                    <a href="#" >
+                    <a href="<?= site_url('sellersReport') ?>" >
                         <svg class="text-sky-950" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-square"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m12 8-4 4 4 4"/><path d="M16 12H8"/></svg>
                     </a>
-                    <span> Hello <b class="text-sky-700"><?= $user->username ?></b> </span>
+                    <span><b class="text-sky-700"><?= $user->username ?> 's</b> sales</span>
                 </h2>
                 <?php if ($date == date('d-m-Y')):?>
                    <p class="text-slate-400 my-2">Date: <span class="text-orange-500"><?= $date ?></span> </p>
                 <?php else: ?>
-                  <p class="text-slate-400 my-2">Date: <span class="text-orange-500"><?= $date ?></span> <a class="text-sky-600 font-semibold p-1 border border-blue-600 rounded-lg" title="View today's sales" href="<?= site_url('mysales') ?>">Today</a> </p>
+                  <p class="text-slate-400 my-2">Date: <span class="text-orange-500"><?= $date ?></span> <a class="text-sky-600 font-semibold p-1 border border-blue-600 rounded-lg" title="View today's sales" href="<?= site_url('sellersReport/sellerReportDetail/'.$user->id) ?>">Today</a> </p>
                 <?php endif ?>
             </div>
-            <form action="<?php echo base_url('mysales/filter_seller_dashboard') ?>" date-rangepicker  datepicker-format="y-mm-dd" class="flex items-center" method="POST">
+            <form action="<?php echo base_url('sellersReport/filter_seller_dashboard') ?>" date-rangepicker  datepicker-format="y-mm-dd" class="flex items-center" method="POST">
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                         </svg>
                     </div>
-                    <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Select date start" require>
+                    <input name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Select date start">
                 </div>
                 <span class="mx-4 text-gray-500">to</span>
                 <div class="relative">
@@ -57,7 +57,7 @@
                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                         </svg>
                     </div>
-                    <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Select date end" require>
+                    <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Select date end">
                 </div>
                 <input type="hidden" name="userId" value="<?= $user->id ?>">
                 <div class="relative ml-2">
@@ -72,33 +72,43 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <div
-            class="rounded-lg shadow-lg p-4 bg-gradient-to-r from-green-100 to-pink-100  dark:border-gray-600 h-36"
+            class="rounded-lg shadow-lg p-4 bg-gradient-to-r from-green-100 to-pink-100  dark:border-gray-600 h-32 md:h-36"
             >
             <p class="text-slate-400 text-xl">Sold Products</p>
             <p class="text-3xl font-semibold text-slate-700"><?= number_format($totalProducts) ?></p>
         </div>
 
         <div
-            class="rounded-lg shadow-lg p-4 bg-pink-200 dark:border-gray-600 h-36"
+            class="rounded-lg shadow-lg p-4 bg-pink-200 dark:border-gray-600 h-32 md:h-36"
         >
             <p class="text-slate-400 text-xl">Expenses </p>
-            <p class="text-xl text-orange-500"><a class="hover:underline" href="#expenses"><?= format_price($totalExpenses) ?></a> </p>
+            <p class="text-xl text-orange-500"> <a class="hover:underline active:underline" href="#expenses"><?= format_price($totalExpenses) ?></a> </p>
         </div>
 
         <div
-            class="rounded-lg shadow-lg bg-gradient-to-r from-green-100 to-pink-100 p-4  dark:border-gray-600 h-36"
-        >
-            <p class="text-slate-400 text-xl">Income </p>
-            <p class="text-3xl font-semibold text-slate-700"><?= format_price($totalRevenue) ?></p>
-        </div>
-
-
-        <div
-            class="rounded-lg shadow-lg bg-gradient-to-r from-cyan-100 to-sky-100 p-4  dark:border-gray-600 h-36"
+            class="rounded-lg shadow-lg bg-gradient-to-r from-green-100 to-pink-100 p-4  dark:border-gray-600 h-32 md:h-36"
         >
             <div>
-                <p class="text-slate-400"> Net Income</p>
-                <p class="text-3xl font-semibold text-green-500"><?= format_price($totalRevenue - $totalExpenses) ?></p>
+                <p class="text-slate-400 text-xl">Income </p>
+                <p class="text-3xl font-semibold text-slate-700"><?= format_price($totalRevenue) ?></p>
+            </div>
+            <div>
+                <p class="text-slate-400"> - Net Income</p>
+                <p class="text-xl font-semibold text-green-500"><?= format_price($totalRevenue - $totalExpenses)  ?></p>
+            </div>
+        </div>
+
+
+        <div
+            class="rounded-lg shadow-lg bg-gradient-to-r from-cyan-100 to-sky-100 p-4  dark:border-gray-600 h-32 md:h-36"
+        >
+            <div>
+                <p class="text-slate-400">Profit</p>
+                <p class="text-2xl font-semibold text-orange-500"><?= format_price($totalProfit) ?></p>
+            </div>
+            <div>
+                <p class="text-slate-400"> - Net Profit</p>
+                <p class="text-xl font-semibold text-green-500"><?= format_price($totalProfit - $totalExpenses)  ?></p>
             </div>
         </div>
     </div>
@@ -109,7 +119,7 @@
             <?php foreach($orders as $order): ?>
                 <h2 id="<?= $order['id'] ?>">
                     <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-arrow-icon<?= $order['id'] ?>" aria-expanded="true" aria-controls="accordion-arrow-icon<?=$order['id'] ?>">
-                        <span>Customer: <b class="text-orange-500"><?= $order['customerId'] ?></b> </span>
+                        <span>Customer: <b class="text-orange-500"><?= $order['customerId'] ?></b></span>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                         </svg>
@@ -124,7 +134,7 @@
                                     <th style="font-weight: 400; font-size: small">QUANTITY</th>
                                     <th style="font-weight: 400; font-size: small">PRICE</th>
                                     <th style="font-weight: 400; font-size: small">TOTAL PRICE</th>
-                                    <!-- <th style="font-weight: 400; font-size: small">PROFIT</th> -->
+                                    <th style="font-weight: 400; font-size: small">PROFIT</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,7 +148,7 @@
                                         <?php $totalItemsProfit += $order_detail['profit'] ?>
                                         <td><?= format_price($order_detail['price']) ?></td>
                                         <td><?= format_price($order_detail['net_price']) ?></td>
-                                        <!-- <td><?//= format_price($order_detail['profit']) ?></td> -->
+                                        <td><?= format_price($order_detail['profit']) ?></td>
                                     </tr>
                                 <?php endforeach?>
                             </tbody>
@@ -148,7 +158,7 @@
                                     <th></th>
                                     <th></th>
                                     <th><?= format_price($totalItemsPrice)  ?></th>
-                                    <!-- <th><?//= format_price($totalItemsProfit)  ?></th> -->
+                                    <th><?= format_price($totalItemsProfit)  ?></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -187,7 +197,6 @@
                     </tfoot>
                 </table>
             </div>
-
         </div>
         <?php else: ?>
             <img src="<?php echo base_url('assets/images/no-products.svg') ?>" class="max-w-md inset-0 m-auto aspect-square animate-pulse" alt="no-products">

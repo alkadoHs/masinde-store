@@ -165,9 +165,8 @@ class Sell extends CI_Controller
             return redirect('login');
         }
 
-        $orders = $this->db->select('o.*, c.name as customer_name, u.name as seller')
+        $orders = $this->db->select('o.*, u.name as seller')
                 ->from('order o')
-                ->join('customer c', 'c.id = o.customerId')
                 ->join('user u','o.userId = u.id')
                 ->where('o.amountPaid != o.totalPrice')
                 ->where('o.branchId', $branchId)

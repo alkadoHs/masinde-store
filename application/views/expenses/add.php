@@ -34,7 +34,6 @@
                     </svg>
                 </button>
             </div>
-       
         <?php endif ?>
 
 
@@ -43,15 +42,21 @@
                 <!-- Start coding here -->
                 <div class="relative bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                     <?php echo form_open('expense/create', array('class'=> 'flex flex-col gap-4 w-full p-4')); ?>
-                    <div class="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-4 shrink">
-                        <div>
-                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <input type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="eg. chakula=500, mafuta=10000" required>
-                        </div>
-                        <div>
-                            <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total Amount(Tsh)</label>
-                            <input type="text" name="amount" id="amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="" required>
-                        </div>
+                    <div class="w-full flex items-center gap-4">
+                        <input type="text" name="description1" id="description" class="bg-gray-50 shrink border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Descripton" required>
+                        <input type="number" name="amount1" id="amount" class="bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Amount" required>
+                    </div>
+                    <div class="w-full flex items-center gap-4">
+                        <input type="text" name="description2" id="description" class="bg-gray-50 shrink border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Descripton">
+                        <input type="number" name="amount2" id="amount" class="bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Amount">
+                    </div>
+                    <div class="w-full flex items-center gap-4">
+                        <input type="text" name="description3" id="description" class="bg-gray-50 shrink border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Descripton">
+                        <input type="number" name="amount3" id="amount" class="bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Amount">
+                    </div>
+                    <div class="w-full flex items-center gap-4">
+                        <input type="text" name="description4" id="description" class="bg-gray-50 shrink border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Descripton">
+                        <input type="number" name="amount4" id="amount" class="bg-gray-50 w-24 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-sky-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" placeholder="Amount">
                     </div>
 
                     <button type="submit" class="flex items-center inset-0 m-auto w-fit h-fit justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800">

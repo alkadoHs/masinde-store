@@ -9,90 +9,72 @@ class Dashboard extends CI_Controller
         if(empty($userId)) {
             return redirect("login");
         }
-
-        $totalProducts = $this->db->select_sum("inventory")->get('branchproduct')->row();
-        $totalIncome = $this->db->select_sum('total')->get('sales')->row();
-        $expensesToday = $this->db->select_sum('amount')->where('DATE(createdAt) =', date('Y-m-d'))->get('expense')->row();
-        $totalRetailPrice = 0;
-        $totalWholePrice = 0;
-
-        $bproducts = $this->db->select("*")->from('branchproduct bp')->join('product p', 'bp.productId = p.id')->get()->result();
-
-        foreach ($bproducts as $bproduct) {
-            $totalWholePrice += ($bproduct->inventory - $bproduct->wholePrice);
-            $totalRetailPrice += ($bproduct->inventory - $bproduct->retailPrice);
+        
+        //general stock
+        $products = $this->db->select('p.buyPrice, bp.inventory')
+                          ->from('branchproduct bp')
+                          ->join('product p', 'bp.productId = p.id', 'left')
+                          ->get()->result();
+        $general_stock = 0;
+        $value = 0;
+        foreach ($products as $product) {
+          $general_stock += $product->inventory;
+          $value += ($product->inventory * $product->buyPrice);
         }
 
-        $branchSales = $this->db->select("*")->from('sales s')
-                               ->join('branch b', 's.branchId = b.id')
-                            ->get()->result();
-
-        $topSelling = $this->db->select('p.name,p.brand, sum(oi.quantity) as totalSales')
-                                ->from('orderitem oi')
-                                  ->join('branchproduct bp', 'oi.branchProductId = bp.id')
-                                  ->join('product p', 'bp.productId = p.id')
-                                  ->group_by('oi.branchProductId')
-                                  ->order_by('totalSales', 'DESC')
-                                  ->limit(10)
-                                ->get()->result();
-
-
-        $todaySalesPerStaff = $this->db->select('o.userId, u.name, sum(oi.quantity) as totalSales')
-                                ->from('orderitem oi')
-                                  ->join('order o','oi.order_id = o.id')
-                                  ->join('user u', 'o.userId = u.id')
-                                  ->where('DATE(oi.createdAt)', date('Y-m-d'))
-                                  ->group_by('o.userId')
-                                  ->order_by('totalSales')
-                                ->get()->result();
-
-                                $firstDayOfMonth = date('Y-m-01'); // Get the first day of the current month
-                                $lastDayOfMonth = date('Y-m-t'); // Get the last day of the current month
+        //today expenses
+        $today_expenses = $this->db->select("SUM(amount) as total_expenses_today")->where('DATE(createdAt)', date('Y-m-d'))->get('expense')->row();
         
-        $monthlySales = $this->db->select('o.userId, u.name, sum(oi.quantity) as totalSales')
-                                ->from('orderitem oi')
-                                  ->join('order o','oi.order_id = o.id')
-                                  ->join('user u', 'o.userId = u.id')
-                                  ->where('DATE(o.createdAt) >=', $firstDayOfMonth)
-                                  ->where('DATE(o.createdAt) <=', $lastDayOfMonth)
-                                  ->group_by('o.userId')
-                                  ->order_by('totalSales')
-                                ->get()->result();
-
-
-        $todayExpensesPerStaff = $this->db->select('u.name, u.username, e.userId, sum(e.amount) as total')
-                                        ->from('expense e')
-                                        ->join('user u', 'e.userId = u.id')
-                                        ->group_by('e.userId')
-                                        ->where('DATE(e.createdAt) =', date('Y-m-d'))
-                                    ->get()->result();
-
-
+        //monthly expenses
+        $monthly_expenses = $this->db->select("SUM(amount) as total_expenses_monthly")->where('MONTH(createdAt)', date('m'))->get('expense')->row();
         
-        $monthlyExpenses = $this->db->select('u.name, e.userId, sum(e.amount) as total')
-                                ->from('expense e')
-                                ->join('user u', 'e.userId = u.id')
-                                ->group_by('e.userId')
-                                ->where('DATE(e.createdAt) >=', $firstDayOfMonth)
-                                ->where('DATE(e.createdAt) <=', $lastDayOfMonth)
-                              ->get()->result();
-        // echo "<pre>";
-        // print_r($todayExpensesPerStaff);
-        // echo "</pre>";
-        // exit();
+        //today income
+        $income = $this->db->select("SUM(amountPaid) as cash_total")->from('order')->where('DATE(createdAt)', date('Y-m-d'))->get()->row();
+
+        //today_profit
+        $order_items = $this->db->select("p.buyPrice, oi.price, oi.quantity")
+                         ->from('orderitem oi')
+                         ->join('branchproduct bp', 'oi.branchProductId = bp.id')
+                         ->join('product p', 'bp.productId = p.id')
+                         ->where('DATE(oi.createdAt)', date('Y-m-d'))
+                         ->get()->result();
+        $total_profit_today = 0;
+
+        foreach ($order_items as $item) {
+          $total_profit_today += (($item->price - $item->buyPrice) * $item->quantity);
+        }
+
+        //best selling products
+        $top_products = $this->db->select("p.name, b.name as branch, SUM(oi.quantity) as quantity,")
+                         ->from('orderitem oi')
+                         ->join('branchproduct bp', 'oi.branchProductId = bp.id')
+                         ->join('product p', 'bp.productId = p.id')
+                         ->join('branch b', 'bp.branchId = b.id')
+                         ->group_by('oi.branchProductId')
+                         ->order_by('quantity', 'DESC')
+                         ->limit(7)
+                         ->get()->result();
+        
+        //monthly sales per branch (income, profit)
+        $sales = $this->db->select("b.name as branch, COUNT(o.branchId), SUM(p.buyPrice) as buy_price, SUM(oi.quantity) as quantity, SUM(oi.price) as price")
+                          ->from('order o')
+                          ->join('orderitem oi', 'oi.order_id = o.id')
+                          ->join('branchproduct bp', 'oi.branchProductId = bp.id')
+                          ->join('product p', 'bp.productId = p.id')
+                          ->join('branch b', 'o.branchId = b.id')
+                          ->group_by('o.branchId')
+                          ->where('MONTH(oi.createdAt)', date('m'))
+                          ->get()->result();
 
         $data = [
-            "totalProducts" => $totalProducts->inventory,
-            "totalIncome"=> $totalIncome->total,
-            'totalRetail' => $totalRetailPrice,
-            'totalWhole'=> $totalWholePrice,
-            'expensesToday' => $expensesToday->amount,
-            'branchSales' => $branchSales,
-            'topSelling' => $topSelling,
-            'todaySales' => $todaySalesPerStaff,
-            'monthlySales' => $monthlySales,
-            'todayExpenses' => $todayExpensesPerStaff,
-            'monthlyExpenses' => $monthlyExpenses,
+          "general_stock" => $general_stock,
+          "stock_value" => $value,
+          "expenses_today" => $today_expenses->total_expenses_today,
+          "expenses_monthly" => $monthly_expenses->total_expenses_monthly,
+          "total_cash_income" => $income->cash_total,
+          "profit_today" => $total_profit_today,
+          "top_products" => $top_products,
+          "sales" => $sales,
         ];
         
         $this->load->view('dashboard', $data);

@@ -19,7 +19,7 @@
                 </button>
             </div>
         <?php endif; ?>
-        <h3 class="text-2xl font-bold text-center text-white">Credit Orders</h3>
+        <h3 class="text-2xl font-bold text-center text-slate-700">Credit Orders</h3>
         <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
             <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
                 <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
@@ -56,17 +56,17 @@
                         </div>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" id="example">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <table class="w-full text-sm text-left text-gray-500" id="example">
+                            <thead>
                                 <tr>
-                                    <th scope="col" class="px-4 py-3">S/N</th>
-                                    <th scope="col" class="px-4 py-3">CUSTOMER</th>
-                                    <th scope="col" class="px-4 py-3">SELLER</th>
-                                    <th scope="col" class="px-4 py-3">AMAUNT PAID</th>
-                                    <th scope="col" class="px-4 py-3">AMOUNT DUE</th>
-                                    <th scope="col" class="px-4 py-3">TOTAL DEPT</th>
-                                    <th scope="col" class="px-4 py-3">DATE</th>
-                                    <th scope="col" class="px-4 py-3">Action</th>
+                                    <th style="font-size: small; font-weignt: 400">S/N</th>
+                                    <th style="font-size: small; font-weignt: 400">CUSTOMER</th>
+                                    <th style="font-size: small; font-weignt: 400">SELLER</th>
+                                    <th style="font-size: small; font-weignt: 400">AMAUNT PAID</th>
+                                    <th style="font-size: small; font-weignt: 400">AMOUNT DUE</th>
+                                    <th style="font-size: small; font-weignt: 400">TOTAL DEPT</th>
+                                    <th style="font-size: small; font-weignt: 400">DATE</th>
+                                    <th style="font-size: small; font-weignt: 400">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,31 +74,31 @@
                                 <?php $rowId = 1 ?>
                                 <?php foreach($orders as $order): ?>
                                 <tr>
-                                    <td class="w-4 px-4 py-3">
+                                    <td>
                                         <?= $rowId < 10 ? "0".$rowId++ : $rowId++ ?>
                                     </td>
-                                    <td class="px-4 py-2">
-                                        <span class="font-bold"><?= $order->customer_name ?></span>
+                                    <td>
+                                        <span class="font-bold"><?= $order->customerId ?></span>
                                     </td>
-                                    <td class="px-4 py-2">
+                                    <td>
                                         <span class="font-bold"><?= $order->seller ?></span>
                                     </td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td>
                                         <div class="flex items-center">
                                             <div class="inline-block w-4 h-4 mr-2 bg-green-700 rounded-full"></div>
                                             <?= format_price($order->amountPaid) ?>
                                         </div>
                                     </td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= format_price($order->totalPrice) ?></td>
+                                    <td><?= format_price($order->totalPrice) ?></td>
                                     <?php $totaldept += ($order->totalPrice - $order->amountPaid) ?>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td>
                                       <div class="flex items-center">
                                             <div class="inline-block w-4 h-4 mr-2 bg-red-700 rounded-full"></div>
                                             <?= format_price($order->totalPrice - $order->amountPaid) ?>
                                         </div>
                                 </td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= format_date($order->createdAt) ?></td>
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td><?= format_date($order->createdAt) ?></td>
+                                    <td>
                                         <?php echo form_open("sell/pay_credit_sales", ["class" =>"flex gap-3"]) ?> 
                                              <input type="hidden" name="order_id" value="<?= $order->id ?>">
                                              <input type="hidden" name="branchId" value="<?= $order->branchId ?>">

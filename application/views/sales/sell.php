@@ -44,11 +44,11 @@
             <table id="updateTable" class="border-collapse border border-slate-400 w-full rounded my-4">
                 <thead>
                     <tr>
-                    <th class="text-orange-500 text-start p-4">PRODUCT</th>
-                    <th class="text-orange-500 text-start p-4">PRICE</th>
-                    <th class="text-orange-500 text-start p-4">QUANTITY</th>
-                    <th class="text-orange-500 text-start p-4">TOTAL</th>
-                    <th class="text-orange-500 text-start p-4">CANCEL</th>
+                    <th style="font-weight: 400; font-size: small">PRODUCT</th>
+                    <th style="font-weight: 400; font-size: small">PRICE</th>
+                    <th style="font-weight: 400; font-size: small">QUANTITY</th>
+                    <th style="font-weight: 400; font-size: small">TOTAL</th>
+                    <th style="font-weight: 400; font-size: small">CANCEL</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,7 +81,7 @@
         <div class="w-full flex justify-center mb-10">
             <ul class="flex flex-col gap-3">
                 <li class="flex gap-5">
-                    <div class="text-white text-xl">Over All Price: </div>
+                    <div class="text-slate-700 text-xl">Over All Price: </div>
                     <div class="text-xl font-bold text-green-400"><?= number_format($overAllPrice) ?></div>
                 </li>
                
@@ -113,11 +113,11 @@
                                     <input type="hidden" name="cartId" value="<?= $cartId ?>">
                                         <div>
                                             <label for="total" class="block mb-2 text-sm font-medium text-gray-900">Total price</label>
-                                            <input type="total" name="total" value="<?= $overAllPrice ?>" id="total" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"  required>
+                                            <input type="number" readonly name="total" value="<?= $overAllPrice ?>" id="total" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"  required>
                                         </div>
                                         <div>
                                             <label for="paid" class="block mb-2 text-sm font-medium text-gray-900">Amount paid</label>
-                                            <input type="paid" value="<?= $overAllPrice ?>" name="paid" id="paid" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"  required>
+                                            <input type="number" value="<?= $overAllPrice ?>" name="paid" id="paid" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400"  required>
                                         </div>
                                         <div>
                                             <label for="default" class="block mb-2 text-sm font-medium text-gray-900">Cash/Credit</label>
@@ -128,13 +128,8 @@
                                         </div>
 
                                         <div>
-                                        <label for="default" class="block mb-2 text-sm font-medium text-gray-900">Select Customer</label>
-                                        <select name="customerId" class="select2" style="width: 100%" id="select2">
-                                                <option value="none">---none---</option>
-                                                <?php foreach($customers as $customer): ?>
-                                                    <option value="<?= $customer->id ?>"><?= $customer->name ?></option>
-                                                <?php endforeach ?>
-                                        </select>
+                                            <label for="customerId" class="block mb-2 text-sm font-medium text-gray-900">Customer Name</label>
+                                            <input type="text" name="customerId" id="customerId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400">
                                         </div>
                                 
                                         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sell</button>
@@ -152,12 +147,12 @@
        <table id="example" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>S/N</th>
-                <th>PRODUCT NAME</th>
-                <th>BRAND</th>
-                <th>STOCK</th>
-                <th>RETAIL PRICE</th>
-                <th>WHOLE PRICE</th>
+                <th style="font-weight: 400; font-size: small">S/N</th>
+                <th style="font-weight: 400; font-size: small">PRODUCT NAME</th>
+                <th style="font-weight: 400; font-size: small">BRAND</th>
+                <th style="font-weight: 400; font-size: small">STOCK</th>
+                <th style="font-weight: 400; font-size: small">RETAIL PRICE</th>
+                <th style="font-weight: 400; font-size: small">WHOLE PRICE</th>
             </tr>
         </thead>
         <tbody>

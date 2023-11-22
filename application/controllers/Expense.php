@@ -20,19 +20,25 @@ class Expense extends CI_Controller {
     public function create() {
         $userId = $this->session->userdata("userId");
         $branchId = $this->session->userdata("branchId");
-        $data = [
-            "userId"=> $userId,
-            "branchId"=> $branchId,
-            "description"=> $this->input->post("description"),
-            "amount"=> $this->input->post("amount"),
+        $datas = [
+            ['userId' => $userId, 'branchId' => $branchId, 'description' => $this->input->post('description1'), 'amount' => $this->input->post('amount1')],
+            ['userId' => $userId, 'branchId' => $branchId, 'description' => $this->input->post('description2'), 'amount' => $this->input->post('amount2')],
+            ['userId' => $userId, 'branchId' => $branchId, 'description' => $this->input->post('description3'), 'amount' => $this->input->post('amount3')],
+            ['userId' => $userId, 'branchId' => $branchId, 'description' => $this->input->post('description4'), 'amount' => $this->input->post('amount4')],
         ];
 
+
         $this->db->trans_start();
+        foreach ($datas as $data) {
+            if(!$data['description'] || !$data['amount']) {
+                continue;
+            }
             $this->db->set('total', 'total - ' . $data['amount'], false);
             $this->db->where('branchId', $branchId);
             $this->db->update('sales');
 
             $this->db->insert("expense", $data);
+        }
         $this->db->trans_complete();
         redirect("expense");
     }

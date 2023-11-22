@@ -19,7 +19,7 @@
                 </button>
             </div>
         <?php endif; ?>
-        <h3 class="text-2xl font-bold text-center text-white">Credit Orders</h3>
+        <h3 class="text-2xl font-bold text-center text-gray-500">Credit Orders</h3>
         <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
             <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
                 <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">

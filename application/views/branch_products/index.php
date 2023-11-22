@@ -9,10 +9,10 @@
                 <a href="<?= site_url("branchProducts/index/1") ?>" class="inline-block w-full p-4 text-gray-900 bg-gray-100 rounded-l-lg focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page" id="mainstore-tab" data-tabs-target="#mainstore" type="button" role="tab" aria-controls="mainstore" aria-selected="false">MAIN STORE</a>
             </li>
             <li class="w-full" role="presentation">
-                <a href="<?= site_url("branchProducts/index/2") ?>" class="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" >UYOLE SHOP</a>
+                <a href="<?= site_url("branchProducts/index/2") ?>" class="inline-block w-full p-4 bg-gray-200 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" >UYOLE SHOP</a>
             </li>
             <li class="w-full" role="presentation">
-                <a href="<?= site_url("branchProducts/index/3") ?>" class="inline-block w-full p-4 bg-white hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">MBALIZI</a>
+                <a href="<?= site_url("branchProducts/index/3") ?>" class="inline-block w-full p-4 bg-violet-200 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 <?= $active_tab ?> focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700">MBALIZI</a>
             </li>
         </ul>
 
@@ -167,8 +167,6 @@
                                             </div>
                                         </th>
                                         <th scope="col" class="px-4 py-3">PRODUCT</th>
-                                        <th scope="col" class="px-4 py-3">BRAND</th>
-                                        <th scope="col" class="px-4 py-3">UNIT</th>
                                         <th scope="col" class="px-4 py-3">STOCK</th>
                                         <th scope="col" class="px-4 py-3">DEMAGES</th>
                                         <!-- <th scope="col" class="px-4 py-3">Sales/Day</th>
@@ -199,12 +197,6 @@
                                         <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <b><?= $branch_product->name ?></b>
                                         </th>
-                                        <td class="px-4 py-2">
-                                            <span class="bg-sky-100 text-sky-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-sky-900 dark:text-sky-300"><?= $branch_product->brand ?></span>
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <span class="bg-sky-100 text-fuchsia-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-fuchsia-900 dark:text-fuchsia-300"><?= $branch_product->unit ?></span>
-                                        </td>
                                         <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex items-center">
                                                 <?php if($branch_product->branch_inventory <= $branch_product->branch_stockLimit ):?>
@@ -258,8 +250,6 @@
                                  <tfoot>
                                     <tr>
                                         <th>TOTAL </th>
-                                        <th></th>
-                                        <th></th>
                                         <th></th>
                                         <th>Stock: <span class="text-orange-500 font-bold animate-pulse"><?= number_format($totalStock) ?></span></th>
                                         <th></th>

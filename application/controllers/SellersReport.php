@@ -1,10 +1,26 @@
 <?php
 
 
-class Mysales extends CI_Controller { 
+class SellersReport extends CI_Controller
+{
     public function index()
     {
-          $sellerId = $this->session->userdata("userId");
+        $todaySalesPerStaff = $this->db->get('user')->result();
+
+        // echo "<pre>";
+        // print_r($todaySalesPerStaff);
+        // echo "</pre>";
+
+        $data = [
+            "sellers" => $todaySalesPerStaff,
+        ];
+
+        $this->load->view('reports/sellersReport', $data);
+    }
+
+
+    public function sellerReportDetail($sellerId)
+    {
           $user = $this->db->get_where('user', array('id'=> $sellerId))->row();
 
           $expenses = $this->db->select('*')
@@ -66,7 +82,7 @@ class Mysales extends CI_Controller {
             'date' => date('d-m-Y')
         ];
 
-        $this->load->view('mysales', $data);
+        $this->load->view('reports/sellerReportDetail', $data);
 
     }
 
@@ -77,14 +93,14 @@ class Mysales extends CI_Controller {
         $end_date = $this->input->post('end');
         $userId = $this->input->post('userId');
 
-        if(!$start_date || !$end_date) {
-            return redirect('mysales/index','refresh');
+         if(!$start_date || !$end_date) {
+            return $this->sellerReportDetail($userId);
         }
 
         $user = $this->db->get_where('user', array('id'=> $userId))->row();
 
 
-        $expenses = $this->db->select('expense.*, user.id, user.username, user.name')
+        $expenses = $this->db->select('*')
                                  ->from('expense')
                                  ->join('user', 'expense.userId = user.id', 'left')
                                  ->where('expense.userId', $userId)
@@ -155,12 +171,11 @@ class Mysales extends CI_Controller {
             'date' => $renderedDateRange,
         ];
 
-        $this->load->view('mysales', $data);
+        $this->load->view('reports/sellerReportDetail', $data);
 
 
         // $orders = $this->db->where("DATE(createdAt) BETWEEN '$start_date' AND '$end_date' ")->get('order')->result();
         // var_dump([$orders]);
     }
-
 
 }

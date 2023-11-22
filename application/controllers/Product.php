@@ -19,8 +19,6 @@ class Product extends CI_Controller
     {
         $input_data = [
             'name' => $this->input->post('name'),
-            'brand' => $this->input->post('brand'),
-            'unit' => $this->input->post('unit'),
             'buyPrice' => $this->input->post('buyPrice'),
             'retailPrice' => $this->input->post('retailPrice'),
             'wholePrice' => $this->input->post('wholePrice'),
@@ -43,8 +41,6 @@ class Product extends CI_Controller
         $input_data = [
             'id' => $this->input->post('id'), 
             'name' => $this->input->post('name'),
-            'brand' => $this->input->post('brand'),
-            'unit' => $this->input->post('unit'),
             'buyPrice' => $this->input->post('buyPrice'),
             'retailPrice' => $this->input->post('retailPrice'),
             'wholePrice' => $this->input->post('wholePrice'),

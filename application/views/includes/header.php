@@ -1,12 +1,24 @@
 <?php 
+$userId = $this->session->userdata("userId");
+$dUser = $this->db->select('u.branchId, b.name as branch')->from('user u')->join('branch b', 'u.branchId = b.id')->where('u.id', $userId)->get()->row();
+
+
+$array = [
+  'branchId' => $dUser->branchId,
+  'branchName' => $dUser->branch,
+];
+
+
 
 $username = $this->session->userdata("username");
-$userId = $this->session->userdata("userId");
 $firstName = $this->session->userdata("firstName");
 $lastName = $this->session->userdata("lastName");
-$branchId = $this->session->userdata("branchId");
 $branchName = $this->session->userdata("branchName");
+$branchId = $this->session->userdata("branchId");
 $position =  $this->session->userdata("position");
+
+
+$this->session->set_userdata( $array );
 
 
 function format_price($price) {
@@ -43,19 +55,19 @@ function format_time_only($date) {
 //     $years = round($seconds / 31553280); //(365+365+365+365+366)/5 * 24 * 60 * 60
 //     if ($seconds <= 60) {
 //         return "Just Now";
-//     } else if ($minutes <= 60) {
+//     } elseif ($minutes <= 60) {
 //         if ($minutes == 1) {
 //             return "one minute ago";
 //         } else {
 //             return "$minutes minutes ago";
 //         }
-//     } else if ($hours <= 24) {
+//     } elseif ($hours <= 24) {
 //         if ($hours == 1) {
 //             return "an hour ago";
 //         } else {
 //             return "$hours hrs ago";
 //         }
-//     } else if ($days <= 7) {
+//     } elseif ($days <= 7) {
 //         if ($days == 1) {
 //             return "yesterday";
 //         } else {
@@ -64,14 +76,14 @@ function format_time_only($date) {
 //                 "$days days ago";
 //         }
 
-//     } else if ($weeks <= 4.3) //4.3 == 52/12
+//     } elseif ($weeks <= 4.3) //4.3 == 52/12
 //     {
 //         if ($weeks == 1) {
 //             return "a week ago";
 //         } else {
 //             return "$weeks weeks ago";
 //         }
-//     } else if ($months <= 12) {
+//     } elseif ($months <= 12) {
 //         if ($months == 1) {
 //             return "a month ago";
 //         } else {
@@ -100,32 +112,32 @@ function format_date_ago($date) {
     $years = $days / 365.25; 
 
     if ($seconds <= 60) {
-        return "Just Now";
-    } else if ($minutes <= 60) {
+        return "$seconds ago";
+    } elseif ($minutes <= 60) {
         if (floor($minutes) == 1) {
             return "one minute ago";
         } else {
             return floor($minutes) . " minutes ago";
         }
-    } else if ($hours <= 24) {
+    } elseif ($hours <= 24) {
         if (floor($hours) == 1) {
             return "an hour ago";
         } else {
             return floor($hours) . " hrs ago";
         }
-    } else if ($days <= 7) {
+    } elseif ($days <= 7) {
         if (floor($days) == 1) {
             return "yesterday";
         } else {
             return floor($days) . " days ago";
         }
-    } else if ($weeks <= 4.3) {
+    } elseif ($weeks <= 4.3) {
         if (floor($weeks) == 1) {
             return "a week ago";
         } else {
             return floor($weeks) . " weeks ago";
         }
-    } else if ($months <= 12) {
+    } elseif ($months <= 12) {
         if (floor($months) == 1) {
             return "a month ago";
         } else {
@@ -154,19 +166,19 @@ function format_date_ago_only($date) {
     $years = round($seconds / 31553280); //(365+365+365+365+366)/5 * 24 * 60 * 60
     if ($seconds <= 60) {
         return "Just Now";
-    } else if ($minutes <= 60) {
+    } elseif ($minutes <= 60) {
         if ($minutes == 1) {
             return "1m";
         } else {
             return "$minutes m";
         }
-    } else if ($hours <= 24) {
+    } elseif ($hours <= 24) {
         if ($hours == 1) {
             return "1h";
         } else {
             return "$hours h";
         }
-    } else if ($days <= 7) {
+    } elseif ($days <= 7) {
         if ($days == 1) {
             return "1d";
         } else {
@@ -175,14 +187,14 @@ function format_date_ago_only($date) {
                 "$days d";
         } 
 
-    } else if ($weeks <= 4.3) //4.3 == 52/12
+    } elseif ($weeks <= 4.3) //4.3 == 52/12
     {
         if ($weeks == 1) {
             return "1w";
         } else {
             return "$weeks w";
         }
-    } else if ($months <= 12) {
+    } elseif ($months <= 12) {
         if ($months == 1) {
             return "1m";
         } else {
@@ -210,8 +222,18 @@ function format_date_ago_only($date) {
     <link rel="stylesheet" href="<?php echo base_url("assets/css/styles.css") ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <script src="<?php echo base_url("assets/js/jquery.js") ?>"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/datepicker.min.js"></script>
     <style>
-        .dataTables_wrapper {
+      @import url('https://fonts.googleapis.com/css2?family=Inter&family=Open+Sans:wght@300&display=swap');
+        * {
+          scroll-behavior: smooth;
+        }
+      
+      body {
+            font-family: 'Inter', sans-serif !important;
+        }
+
+      .dataTables_wrapper {
         padding: 1.12rem 0;
         border-radius: 10px;
         overflow-y: auto;
@@ -220,6 +242,65 @@ function format_date_ago_only($date) {
       .dataTables_wrapper table {
         padding: 4px 0;
       }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: white;
+        }
+
+        .tb-wrapper {
+            overflow: auto;
+            position: relative;
+            background-color: #ddd;
+            white-space: nowrap;
+            padding: 8px;
+            border-radius: 6px;
+            max-height: 500px;
+        }
+        thead tr {
+            border-radius: 6px;
+        }
+
+        tfoot th {
+          padding: 6px 8px;
+          text-align: left;
+        }
+
+        /* .fth, .ftd {
+            position: sticky;
+            left: 2px;
+            background-color: #eee;
+        } */
+
+        table,thead th, tbody tr {
+            border: 1px solid #ccc;
+        }
+
+        thead th {
+            position: sticky;
+            top: 2px;
+            background-color: #0369a1;
+            text-align: left;
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #eee;
+        }
+
+        tbody tr:hover {
+            background-color: #ddd;
+        }
+
+        td, thead th {
+            padding: 6px 10px;
+        }
+
+        tfoot td {
+            display: flex;
+            gap: 4px;
+        }
     </style>
     <title>Masinde Store</title>
 </head>
@@ -267,7 +348,10 @@ function format_date_ago_only($date) {
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-8 h-8 text-rose-600 animate-pulse">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
           </svg>
-            <span class="self-center text-2xl font-semibold whitespace-nowrap hidden md:grid dark:text-white">Masinde </span>
+          <span class="self-center text-2xl font-semibold whitespace-nowrap hidden md:grid"> 
+             <span class="text-gray-700 text-xl block"><?= $branchName ?></span>
+          </span>
+          
           </a>
           
         </div>
@@ -283,26 +367,15 @@ function format_date_ago_only($date) {
               <path clip-rule="evenodd" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path>
             </svg>
           </button>
-          <!-- Notifications -->
-          <button
-            type="button"
-            data-dropdown-toggle="notification-dropdown"
-            class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-          >
-            <!-- <span class="sr-only">View notifications</span>
-            Bell icon
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-              ></path>
-            </svg> -->
-          </button>
+          <!-- switch branch -->
+          <?php if($position == 'ADMIN' || $position == 'VENDOR'):?>
+          <select name="branch" class="w-16 h-10 rounded" id="switchBranch">
+            <option value="0">----</option>
+            <option value="1">MAIN</option>
+            <option value="2">UYOLE</option>
+            <option value="3">MBALIZI</option>
+          </select>
+          <?php endif ?>
           <!-- Dropdown menu
           <div
             class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:divide-gray-600 dark:bg-gray-700 rounded-xl"
@@ -348,7 +421,7 @@ function format_date_ago_only($date) {
                     class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"
                   >
                     New message from
-                    <span class="font-semibold text-gray-900 dark:text-white"
+                    <span class="font-semibold text-gray-900"
                       >Bonnie Green</span
                     >: "Hey, what's up? All set for the presentation?"
                   </div>
@@ -389,11 +462,11 @@ function format_date_ago_only($date) {
                   <div
                     class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"
                   >
-                    <span class="font-semibold text-gray-900 dark:text-white"
+                    <span class="font-semibold text-gray-900"
                       >Jese leos</span
                     >
                     and
-                    <span class="font-medium text-gray-900 dark:text-white"
+                    <span class="font-medium text-gray-900"
                       >5 others</span
                     >
                     started following you.
@@ -437,11 +510,11 @@ function format_date_ago_only($date) {
                   <div
                     class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"
                   >
-                    <span class="font-semibold text-gray-900 dark:text-white"
+                    <span class="font-semibold text-gray-900"
                       >Joseph Mcfall</span
                     >
                     and
-                    <span class="font-medium text-gray-900 dark:text-white"
+                    <span class="font-medium text-gray-900"
                       >141 others</span
                     >
                     love your story. See it and view more stories.
@@ -485,7 +558,7 @@ function format_date_ago_only($date) {
                   <div
                     class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"
                   >
-                    <span class="font-semibold text-gray-900 dark:text-white"
+                    <span class="font-semibold text-gray-900"
                       >Leslie Livingston</span
                     >
                     mentioned you in a comment:
@@ -532,7 +605,7 @@ function format_date_ago_only($date) {
                   <div
                     class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"
                   >
-                    <span class="font-semibold text-gray-900 dark:text-white"
+                    <span class="font-semibold text-gray-900"
                       >Robert Brown</span
                     >
                     posted a new video: Glassmorphism - learn how to implement
@@ -548,7 +621,7 @@ function format_date_ago_only($date) {
             </div>
             <a
               href="#"
-              class="block py-2 text-md font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-600 dark:text-white dark:hover:underline"
+              class="block py-2 text-md font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-600 dark:hover:underline"
             >
               <div class="inline-flex items-center">
                 <svg
@@ -573,7 +646,7 @@ function format_date_ago_only($date) {
           <button
             type="button"
             data-dropdown-toggle="apps-dropdown"
-            class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100  focus:ring-4 focus:ring-gray-300"
           >
             <!-- <span class="sr-only">View notifications</span>
              Icon
@@ -616,7 +689,7 @@ function format_date_ago_only($date) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">Sales</div>
+                <div class="text-sm text-gray-900">Sales</div>
               </a>
               <a
                 href="#"
@@ -633,7 +706,7 @@ function format_date_ago_only($date) {
                     d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">Users</div>
+                <div class="text-sm text-gray-900">Users</div>
               </a>
               <a
                 href="#"
@@ -652,7 +725,7 @@ function format_date_ago_only($date) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">Inbox</div>
+                <div class="text-sm text-gray-900">Inbox</div>
               </a>
               <a
                 href="#"
@@ -671,7 +744,7 @@ function format_date_ago_only($date) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">
+                <div class="text-sm text-gray-900">
                   Profile
                 </div>
               </a>
@@ -692,7 +765,7 @@ function format_date_ago_only($date) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">
+                <div class="text-sm text-gray-900">
                   Settings
                 </div>
               </a>
@@ -714,7 +787,7 @@ function format_date_ago_only($date) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">
+                <div class="text-sm text-gray-900">
                   Products
                 </div>
               </a>
@@ -738,7 +811,7 @@ function format_date_ago_only($date) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">
+                <div class="text-sm text-gray-900">
                   Pricing
                 </div>
               </a>
@@ -759,7 +832,7 @@ function format_date_ago_only($date) {
                     clip-rule="evenodd"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">
+                <div class="text-sm text-gray-900">
                   Billing
                 </div>
               </a>
@@ -782,7 +855,7 @@ function format_date_ago_only($date) {
                     d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
                   ></path>
                 </svg>
-                <div class="text-sm text-gray-900 dark:text-white">
+                <div class="text-sm text-gray-900">
                   Logout
                 </div>
               </a>
@@ -790,7 +863,7 @@ function format_date_ago_only($date) {
           </div> -->
           <button
             type="button"
-            class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            class="flex mx-3 text-sm bg-gray-100 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 "
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="dropdown"
@@ -803,16 +876,16 @@ function format_date_ago_only($date) {
           </button>
           <!-- Dropdown menu -->
           <div
-            class="hidden z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
+            class="hidden z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow rounded-xl"
             id="dropdown"
           >
             <div class="py-3 px-4">
               <span
-                class="block text-sm font-semibold text-gray-900 dark:text-white"
+                class="block text-sm font-semibold text-gray-900"
                 ><?= $username ?></span
               >
               <span
-                class="block text-sm text-gray-900 truncate dark:text-white"
+                class="block text-sm text-gray-900 truncate"
                 ><?= $position ?></span
               >
             </div>

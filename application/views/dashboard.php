@@ -1,250 +1,168 @@
   <?php include APPPATH . "/views/includes/header.php"?>
   <?php include APPPATH . "/views/includes/sidebar.php"?>
 
-    <main class="py-4 px-2 lg:px-4 md:ml-64 h-auto pt-20">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-        <div
-          class="rounded-lg shadow-2xl p-4  bg-zinc-900 dark:border-gray-600 h-32 md:h-36"
-        >
-          <p class="text-slate-100 text-xl">Total products</p>
-          <p class="text-3xl font-semibold text-slate-300"><?= number_format($totalProducts) ?></p>
-      </div>
+    <main class="py-4 px-2 lg:px-4 md:ml-64 h-auto pt-20 grid gap-5">
+      <h3 class="text-gray-600 text-xl font-semibold">Admin Dashboard</h3>
+       <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+           <div class="flex items-center border border-slate-200 rounded shadow">
+             <div class="bg-gradient-to-r from-zinc-900 to-zinc-950 h-full flex items-center justify-center">
+               <svg class="text-slate-300 w-14 h-14" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-horizontal-distribute-center"><rect width="6" height="14" x="4" y="5" rx="2"/><rect width="6" height="10" x="14" y="7" rx="2"/><path d="M17 22v-5"/><path d="M17 7V2"/><path d="M7 22v-3"/><path d="M7 5V2"/></svg>
+             </div>
+             <div class="p-4">
+               <p class="text-slate-500">General Stock</p>
+               <div>
+                 <p class="text-gray-700 text-xl font-semibold"><?= number_format($general_stock) ?></p>
+                 <p class="flex gap-2">
+                   <span class="bg-sky-900 text-white text-sm inset-0 m-auto px-1 rounded">VALUE</span>
+                   <span class="text-green-700 text-xl"><?= format_price($stock_value) ?></span>
+                 </p>
+               </div>
+             </div>
+           </div>
 
-      <div
-        class="rounded-lg shadow-2xl p-4  bg-zinc-900 dark:border-gray-600 h-32 md:h-36"
-      >
-        <p class="text-slate-100 text-xl">Balance</p>
-        <p class="text-3xl font-semibold text-slate-300"><?= format_price($totalIncome) ?></p>
-    </div>
+           <div class="flex items-center border border-slate-200 rounded shadow">
+             <div class="bg-gradient-to-r from-rose-900 to-rose-950 h-full flex items-center justify-center">
+               <svg class="text-slate-300 w-14 h-14" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-horizontal-distribute-center"><rect width="6" height="14" x="4" y="5" rx="2"/><rect width="6" height="10" x="14" y="7" rx="2"/><path d="M17 22v-5"/><path d="M17 7V2"/><path d="M7 22v-3"/><path d="M7 5V2"/></svg>
+             </div>
+             <div class="p-4">
+               <p class="text-slate-500">Expenses</p>
+               <div>
+                 <p class="text-orange-700 text-xl font-semibold"><?= format_price($expenses_today) ?></p>
+                 <p class="flex gap-2 items-center">
+                   <span class="bg-blue-900 text-white text-sm inset-0 m-auto px-1 rounded">
+                    <!-- avoid division by zero -->
+                    <?php if($total_cash_income > 0):?>
+                      <span class="text-red-500"><?= round(($expenses_today/$total_cash_income)*100, 2) . "%" ?></span> of your income</span>
+                   <?php endif ?>
+                 </p>
+               </div>
+             </div>
+           </div>
 
-        <div
-          class="rounded-lg shadow-2xl p-4  bg-zinc-900 dark:border-gray-600 h-32 md:h-36"
-        >
-          <p class="text-slate-100 text-xl">Expenses </p>
-          <p class="text-xl text-orange-500">Tsh <?= format_price($expensesToday) ?></p>
-      </div>
+           <div class="flex items-center border border-slate-200 rounded shadow">
+             <div class="bg-gradient-to-r from-zinc-900 to-zinc-950 h-full flex items-center justify-center">
+               <svg class="text-slate-300 w-14 h-14" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-horizontal-distribute-center"><rect width="6" height="14" x="4" y="5" rx="2"/><rect width="6" height="10" x="14" y="7" rx="2"/><path d="M17 22v-5"/><path d="M17 7V2"/><path d="M7 22v-3"/><path d="M7 5V2"/></svg>
+             </div>
+             <div class="p-4">
+               <p class="text-slate-500">Income</p>
+               <div>
+                 <p class="text-orange-700 text-xl font-semibold"><?= format_price($total_cash_income) ?></p>
+                 <p class="flex gap-2">
+                   <span class="bg-blue-900 text-white text-sm inset-0 m-auto px-1 rounded">NET</span>
+                   <span class="text-green-700 text-xl"><?= format_price($total_cash_income - $expenses_today) ?></span>
+                 </p>
+               </div>
+             </div>
+           </div>
 
+            <div class="flex items-center border border-slate-200 rounded shadow">
+             <div class="bg-gradient-to-r from-emerald-900 to-emerald-950 h-full flex items-center justify-center">
+               <svg class="text-slate-300 w-14 h-14" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-align-horizontal-distribute-center"><rect width="6" height="14" x="4" y="5" rx="2"/><rect width="6" height="10" x="14" y="7" rx="2"/><path d="M17 22v-5"/><path d="M17 7V2"/><path d="M7 22v-3"/><path d="M7 5V2"/></svg>
+             </div>
+             <div class="p-4">
+               <p class="text-slate-500">Profit</p>
+               <div>
+                 <p class="text-orange-700 text-xl font-semibold"><?= format_price($profit_today) ?></p>
+                 <p class="flex gap-2">
+                   <span class="bg-blue-900 text-white text-sm inset-0 m-auto px-1 rounded">NET</span>
+                   <span class="text-green-700 text-xl"><?= format_price($profit_today - $expenses_today) ?></span>
+                 </p>
+               </div>
+             </div>
+           </div>
+       </section>
 
-        <!-- <div
-          class="rounded-lg shadow-2xl p-3  bg-zinc-900 dark:border-gray-600 h-32 md:h-36"
-        >
-          <p class="text-slate-100 text-xl">Profit raised</p>
-          <p class="text-3xl font-semibold text-slate-300">123,889</p>
-          <p class="text-xl text-orange-500">-Tsh 200,000/=</p>
-      </div> -->
-      </div>
-
-
-      <div
-        class="rounded-lg p-3 shadow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-fit mb-4"
-      >
-      <p class="text-xl text-slate-200 mb-3">Top selling products </p>
-              <div class="relative overflow-x-auto overflow-y-auto">
-                  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                          <tr>
-                              <th scope="col" class="px-6 py-3">
-                                  PRODUCT NAME
-                              </th>
-                              <th scope="col" class="px-6 py-3">
-                                  BRAND
-                              </th>
-                              <th scope="col" class="px-6 py-3">
-                                  AMOUNT SOLD
-                              </th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <?php foreach($topSelling as $product):?>
-                          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                  <?= $product->name ?>
-                              </th>
-                              <td class="px-6 py-4">
-                                  <?= $product->brand ?>
-                              </td>
-                              <td class="px-6 py-4">
-                                 <?= number_format($product->totalSales) ?>
-                              </td>
-                          </tr>
-                          <?php endforeach ?>
-                      </tbody>
-                  </table>
-              </div>
-
-      </div>
-
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div
-          class="rounded-lg p-3 bg-zinc-900 shadow-2xl border-gray-300 dark:border-gray-600 h-fit"
-        >
-            <p class="text-xl text-slate-200 mb-3">-Today sales per staff </p>
-              <div class="relative overflow-x-auto overflow-y-auto">
-                  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                          <tr>
-                              <th scope="col" class="px-6 py-3">
-                                  STAFF NAME
-                              </th>
-                              <th scope="col" class="px-6 py-3">
-                                  PRODUCTS SOLD
-                              </th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <?php foreach($todaySales as $sale):?>
-                          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                  <?= $sale->name ?>
-                              </th>
-                              <td class="px-6 py-4">
-                                  <?= number_format($sale->totalSales) ?>
-                              </td>
-                          </tr>
-                          <?php endforeach ?>
-                        </tbody>
-                  </table>
-              </div>
-         </div>
-
-
-        <div
-          class="rounded-lg p-3 bg-zinc-900 shadow-2xl border-gray-300 dark:border-gray-600 h-fit"
-        >
-        <p class="text-xl text-slate-200 mb-3">-Today Expenses per staff </p>
-              <div class="relative overflow-x-auto overflow-y-auto">
-                  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                          <th scope="col" class="px-6 py-3">
-                            STAFF NAME
-                          </th>
-                          <th scope="col" class="px-6 py-3">
-                            TOTAL EXPENSES
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php foreach($todayExpenses as $expense): ?>
-                          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <?= $expense->name ?>
-                              </th>
-                              <td class="px-6 py-4">
-                                <?= format_price($expense->total) ?>
-                              </td>
-                            </tr>
-                          <?php endforeach ?>
-                        </tbody>
-                  </table>
-              </div>
-
-        </div>
-
-
-        <div
-          class="rounded-lg p-3 shandow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-fit"
-        >
-          <p class="text-xl text-slate-200 mb-3">- Balance per branch </p>
-              <div class="relative overflow-x-auto overflow-y-auto">
-                  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                          <tr>
-                              <th scope="col" class="px-6 py-3">
-                                  BRANCH
-                              </th>
-                              <th scope="col" class="px-6 py-3">
-                                  BALANCE
-                              </th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <?php foreach($branchSales as $branch): ?>
-                          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                  <?= $branch->name ?>
-                              </th>
-                              <td class="px-6 py-4">
-                                  <?= format_price($branch->total) ?>
-                              </td>
-                          </tr>
-                          <?php endforeach ?>
-                      </tbody>
-                  </table>
-              </div>
-
-        </div>
-
+       
+      <section class="grid gap-4 grid-cols-1 lg:grid-cols-2">
+        <div class="w-full bg-slate-50 rounded-lg shadow p-4 md:p-6">
+          <h3 class="text-gray-500 text-lg my-3">- Monthly Sales</h3>
         
-        <div
-          class="rounded-lg p-3 shadow-2xl bg-zinc-900 border-gray-300 dark:border-gray-600 h-fit"
-        >
-          <p class="text-xl text-slate-200 mb-3">Monthly Expenses per Staff </p>
-              <div class="relative overflow-x-auto overflow-y-auto">
-                  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                          <tr>
-                              <th scope="col" class="px-6 py-3">
-                                  S/N
-                              </th>
-                              <th scope="col" class="px-6 py-3">
-                                  STAFF NAME
-                              </th>
-                              <th scope="col" class="px-6 py-3">
-                                    TOTAL EXPENSES
-                              </th>
-                              
-                          </tr>
-                      </thead>
-                      <tbody>
-                        <?php $rowId = 1 ?>
-                        <?php foreach($monthlyExpenses as $expense): ?>
-                          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                  <?= $rowId > 10 ? '0'.$rowId++ : $rowId++ ?>
-                              </th>
-                              <td class="px-6 py-4">
-                                  <?= $expense->name ?>
-                              </td>
-                              <td class="px-6 py-4">
-                                  <?= format_price($expense->total) ?>
-                              </td>
-                          </tr>
-                          <?php endforeach ?>
-                      </tbody>
-                  </table>
-              </div>
+          <table class="text-gray-500">
+            <tr>
+              <th class="text-base text-left pl-3">OFFICE</th>
+              <th class="text-base text-left pl-3">INCOME</th>
+              <th class="text-base text-left pl-3">PROFIT</th>
+            </tr>
+            <?php 
+              $total_income = 0;
+              $total_profit = 0;
+            ?>
+            <?php foreach($sales as $sale):?>
+              <tr>
+                <td><?= $sale->branch ?></td>
+                <td><?= format_price($sale->quantity * $sale->price) ?></td>
+                <?php 
+                 $total_income += ($sale->quantity * $sale->price);
+                 $total_profit += (($sale->price - $sale->buy_price) * $sale->quantity);
+                ?>
+                <td><?= format_price(($sale->price - $sale->buy_price) * $sale->quantity) ?></td>
+              </tr>
+            <?php endforeach ?>
+            <tfoot>
+               <tr class="text-green-600">
+                <th>TOTAL </th>
+                <th><?= format_price($total_income) ?></th>
+                <th><?= format_price($total_profit) ?></th>
+               </tr>
+            </tfoot>
+          </table>
 
-      </div>
-      </div>
+          <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3 pt-4">
+            <dl>
+              <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Net Profit</dt>
+              <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white"><?= format_price($total_profit - $expenses_monthly) ?></dd>
+            </dl>
+            <div>
+              <span class="bg-green-100 text-green-800 text-xs font-medium inline-flex items-center px-2.5 py-1 rounded-md dark:bg-green-900 dark:text-green-300">
+                <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
+                </svg>
+                Profit rate 23.5%
+              </span>
+            </div>
+          </div>
+        
+          <div class="grid grid-cols-2 py-3">
+            <dl>
+              <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Net Income</dt>
+              <dd class="leading-none text-xl font-bold text-green-500 dark:text-green-400"><?= format_price($total_income - $expenses_monthly) ?></dd>
+            </dl>
+            <dl>
+              <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Expense</dt>
+              <dd class="leading-none text-xl font-bold text-red-600 dark:text-red-500">- <?= format_price($expenses_monthly) ?></dd>
+            </dl>
+          </div>
+          
+        </div>
 
+        <div class="w-full rounded-lg shadow py-4">
+            <h3 class="text-gray-500 text-lg my-3">- Top selling products</h3>
+            <table class="text-gray-500">
+              <thead>
+                <tr>
+                   <th style="font-weight: 400; font-size: small">S/N</th>
+                   <th style="font-weight: 400; font-size: small">PRODUCT</th>
+                   <th style="font-weight: 400; font-size: small">BRANCH</th>
+                   <th style="font-weight: 400; font-size: small">QUANTITY SOLD</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php $rowId = 1?>
+                <?php foreach($top_products as $product):?>
+                  <tr>
+                    <td><?= $rowId < 10 ? '0'.$rowId++ : $rowId++ ?></td>
+                    <td><?= $product->name ?></td>
+                    <td><?= $product->branch ?></td>
+                    <td><?= number_format($product->quantity) ?></td>
+                  </tr>
+                <?php endforeach ?>
+              </tbody>
+            </table>
+        </div>
+      </section>
 
-      <!-- <div
-        class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4"
-      ></div>
-
-
-
-      <div class="grid grid-cols-2 gap-4">
-        <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
-        ></div>
-
-        <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
-        ></div>
-
-
-        <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
-        ></div>
-
-        <div
-          class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-fit"
-        ></div>
-      </div> -->
     </main>
   </div>
+
 
   <?php include APPPATH . "/views/includes/footer.php"?>
