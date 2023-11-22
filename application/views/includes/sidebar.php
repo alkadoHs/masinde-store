@@ -7,6 +7,7 @@
       id="drawer-navigation"
     >
       <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+        <p class="p-4 text-xl text-orange-500 lg:hidden"><?= $branchName ?></p>
         <ul class="space-y-2">
           <?php if($position == "ADMIN"):?>
           <li>
