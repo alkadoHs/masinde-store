@@ -3,6 +3,10 @@
 
 class Supplier extends CI_Controller {
     public function index() {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+        
         $suppliers = $this->db->get("suppliers")->result();
 
         $data = [

@@ -3,6 +3,10 @@
 
 class Customer extends CI_Controller {
     public function index() {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+        
         $customers = $this->db->get("customer")->result();
 
         $data = [

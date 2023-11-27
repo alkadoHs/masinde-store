@@ -3,6 +3,10 @@
 class Stock extends CI_Controller {
     public function index()
     {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+
         $order = $this->db->select('ns.*, p.name as product_name')
                    ->from('newstock ns')
                     ->join('product p', 'p.id = ns.productId')
@@ -108,6 +112,10 @@ class Stock extends CI_Controller {
 
     public function transfer() 
     {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+
         $userId = $this->session->userdata("userId");
         $branchId = $this->session->userdata("branchId");
 
@@ -188,6 +196,11 @@ class Stock extends CI_Controller {
 
     public function receive_transfer()
     {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+
+        
         $branchId = $this->session->userdata('branchId');
 
         $items = $this->db->select("tp.*, b.name as from, p.name, p.brand, tp.quantity")

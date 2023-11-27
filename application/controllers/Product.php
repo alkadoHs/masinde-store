@@ -30,6 +30,9 @@ class Product extends CI_Controller
 
     public function edit($id) 
     {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
         $product = $this->db->get_where('product', ['id'=> $id])->row();
         $this->load->view('products/edit_product', ['product'=> $product]);
 

@@ -4,6 +4,10 @@
 class Mysales extends CI_Controller { 
     public function index()
     {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+        
           $sellerId = $this->session->userdata("userId");
           $user = $this->db->get_where('user', array('id'=> $sellerId))->row();
 

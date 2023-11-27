@@ -61,6 +61,10 @@ class BranchProducts extends CI_Controller
 
 
     public function edit($product_id, $name) {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+        
         $product = $this->db->get_where("branchproduct", ['id' => $product_id])->row();
         $data = [
             "product" => $product,

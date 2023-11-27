@@ -5,6 +5,10 @@ class SellersReport extends CI_Controller
 {
     public function index()
     {
+        if (!$this->session->userdata("userId")) {
+            return redirect("login");
+        }
+        
         $todaySalesPerStaff = $this->db->get('user')->result();
 
         // echo "<pre>";
