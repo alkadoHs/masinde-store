@@ -7,6 +7,10 @@ class Sell extends CI_Controller
         if(!$this->session->userdata("userId")) {
             return redirect("login");
         }
+
+        $vendors = $this->db->where('role', 'VENDOR')->or_where('id', $this->session->userdata("userId"))->order_by('role')->get('user')->result();
+
+        
       
         $products = $this->db->select("bp.*, p.name as productName, p.brand, p.unit, p.buyPrice, p.retailPrice, p.wholePrice")
                           ->from("branchproduct bp")
@@ -22,7 +26,7 @@ class Sell extends CI_Controller
                             ->where("c.userId", $this->session->userdata("userId"))
                         ->get()->result();
         // echo "<pre>";
-        // print_r($cartItems);
+        // print_r($vendors);
         // echo"</pre>";
         // exit();
 
@@ -33,6 +37,7 @@ class Sell extends CI_Controller
             "products"=> $products,
             "cartItems"=> $cartItems,
             "customers"=> $customers,
+            "sellers" => $vendors,
         ];
         $this->load->view("sales/sell", $data);
     }
@@ -111,7 +116,7 @@ class Sell extends CI_Controller
 
         $cartId = $this->input->post("cartId");
         $branchId = $this->session->userdata("branchId");
-        $userId = $this->session->userdata("userId");
+        $userId = $this->input->post("sellerId");
         $customer_id = $this->input->post("customerId");
 
         $customer = null;
@@ -126,7 +131,6 @@ class Sell extends CI_Controller
             "customerId"=> $customer,
             "totalPrice"=> $this->input->post("total"),
             "amountPaid"=> $this->input->post("paid"),
-            "paymentMethod"=> $this->input->post("paymentMethod"),
         ];
 
         $this->db->trans_start();
