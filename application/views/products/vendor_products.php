@@ -115,7 +115,11 @@
                                         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><?= $orderitem->name . " . " . "<span style='color: green'>$orderitem->bp_inventory</span>" ?></th>
                                         <td class="px-4 py-3">
                                             <input type="hidden" name="id[]" value="<?= $orderitem->id ?>">
-                                            <input type="number" name="quantity[]" value="<?= $orderitem->quantity ?>" id="quantity" class="bg-gray-50 border max-w-[100px] min-w-[80px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                                            <?php if($orderitem->status == 'pending'):?>
+                                              <input type="number" name="quantity[]" value="<?= $orderitem->quantity ?>" id="quantity" class="bg-gray-50 border max-w-[100px] min-w-[80px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                                            <?php else: ?>
+                                              <input readonly type="number" name="quantity[]" value="<?= $orderitem->quantity ?>" id="quantity" class="bg-gray-50 border max-w-[100px] min-w-[80px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                                            <?php endif ?>
                                         </td>
                                         <td><?= $orderitem->inventory ?></td>
                                         <td><?= format_date_time($orderitem->createdAt) ?></td>

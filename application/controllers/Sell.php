@@ -18,10 +18,12 @@ class Sell extends CI_Controller
         $products = [];
 
         if($this->session->userdata('position') == "VENDOR") {
-            $products = $this->db->select("vp.inventory as vp_inventory, vp.branchProductId as id, , bp.stockLimit, bp.inventory, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
+            $products = $this->db->select("vp.inventory as inventory, vp.branchProductId as id, , bp.stockLimit, bp.inventory as bp_iventory, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
                 ->from("vendorproduct vp")
                 ->join('branchproduct bp', 'vp.branchProductId = bp.id')
                 ->join("product p", "bp.productId = p.id")
+                ->where('vp.userId', $this->session->userdata("userId"))
+                ->where('vp.status', 'approved')
                 ->get()->result();
         } else {
             $products = $this->db->select("bp.*, p.name as productName, p.brand, p.unit, p.buyPrice, p.retailPrice, p.wholePrice")
@@ -174,15 +176,16 @@ class Sell extends CI_Controller
         $this->db->insert('order', $data);
         foreach ($cartItems as $cartItem) {
             $branchProduct = $this->db->get_where('branchproduct', ['id' => $cartItem->branchProductId])->row();
-            //if stock available is less than cartItem quantity  return
-            // if($branchProduct->inventory < $cartItem->quantity) {
-            //     $this->db->delete('order', ['id' => $orderId]);
-            //     $this->session->set_flashdata('exceed_stock', "The products Quantity you are trying to sell is greater than the stock available.");
-            //     return redirect('sell');
-            // }
+            
             $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
             $newInventory = $branchProduct->inventory - $cartItem->quantity;
-            $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $branchProduct->id, 'branchId' => $branchId]);
+            if($this->session->userdata('position') == "VENDOR") {
+                $vendorProduct = $this->db->get_where('vendorproduct', ['branchProductId' => $branchProduct->id, 'userId' => $userId])->row();
+                $newInventory2 = $vendorProduct->inventory - $cartItem->quantity;
+                $this->db->update('vendorproduct', ['inventory' => $newInventory2], ['id' => $vendorProduct->id]);
+            }
+
+            $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $branchProduct->id]);
         }
 
         $this->db->set('total', 'total + ' . $data['amountPaid'], false);

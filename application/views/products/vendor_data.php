@@ -2,7 +2,7 @@
 <?php include APPPATH . "/views/includes/sidebar.php" ?>
 
 <main class="py-4 px-2 lg:px-4 md:ml-64 h-auto pt-20 ">
-    <?php if ($this->session->flashdata('vp_approved')): ?>
+    <?php if ($this->session->flashdata('sales_confirmed')): ?>
         <div id="toast-success"
             class="flex items-center w-full p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
             role="alert">
@@ -16,7 +16,7 @@
                 <span class="sr-only">Check icon</span>
             </div>
             <div class="ml-3 text-sm font-normal">
-                <?= $this->session->flashdata('vp_approved') ?>
+                <?= $this->session->flashdata('sales_confirmed') ?>
             </div>
             <button type="button"
                 class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
@@ -28,45 +28,35 @@
                 </svg>
             </button>
         </div>
-    <?php elseif ($this->session->flashdata('complete_purchaseorder_success')): ?>
-        <div id="toast-success"
-            class="flex items-center w-full p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+    <?php elseif ($this->session->flashdata('exceed_stock2')): ?>
+        <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
             role="alert">
-            <div
-                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                    viewBox="0 0 20 20">
-                    <path
-                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                </svg>
-                <span class="sr-only">Check icon</span>
+            <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <span class="sr-only">Info</span>
+            <div>
+                <?= $this->session->flashdata('exceed_stock2') ?>
             </div>
-            <div class="ml-3 text-sm font-normal">
-                <?= $this->session->flashdata('complete_purchaseorder_success') ?>
-            </div>
-            <button type="button"
-                class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
-                data-dismiss-target="#toast-success" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-            </button>
         </div>
     <?php endif ?>
 
 
     <section class="bg-gray-50 dark:bg-gray-900 h-screen flex items-start">
-        <div class="max-w-screen-xl mx-auto  w-full">
-            <h2 class="text-white text-lg font-bold p-3 bg-emerald-900 rounded">PENDING STOCK</h2>
+        <div class="max-w-screen-xl mx-auto lg:px-12 w-full">
+            <!-- Start coding here -->
+            
+
+
             <section class="bg-gray-50 dark:bg-gray-900 py-3">
                 <div class="mx-auto max-w-screen-xl lg:px-4">
                     <!-- Start coding here -->
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <div
                             class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                            <div class="w-full md:w-1/2">
+                            <!-- <div class="w-full md:w-1/2">
                                 <form class="flex items-center">
                                     <label for="simple-search" class="sr-only">Search</label>
                                     <div class="relative w-full">
@@ -85,8 +75,8 @@
                                             placeholder="Search" required="">
                                     </div>
                                 </form>
-                            </div>
-                            <div
+                            </div> -->
+                            <!-- <div
                                 class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                                 <button id="updateButton" type="button"
                                     class="flex items-center justify-center text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800">
@@ -95,38 +85,44 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                                     </svg>
-                                    Approve Stock
+                                    Update
                                 </button>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="overflow-x-auto">
                             <table id="productTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
-                                        <th>S/N</th>
-                                        <th scope="col" class="px-4 py-3">PRODUCT NAME</th>
-                                        <th scope="col" class="px-4 py-3">FROM BRANCH</th>
-                                        <th scope="col" class="px-4 py-3">QUANTITY</th>
+                                        <th style="font-weight: 400; font-size: small">VENDOR</th>
+                                        <th style="font-weight: 400; font-size: small">PRODUCT NAME</th>
+                                        <th style="font-weight: 400; font-size: small">QUANTITY</th>
+                                        <th style="font-weight: 400; font-size: small">REMAINED</th>
+                                        <th style="font-weight: 400; font-size: small">DATE</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $rowId = 1 ?>
-                                    <?php foreach ($products as $product): ?>
+                                    <?php $totalPrice = 0; ?>
+                                    <?php $orderId = null; ?>
+                                    <?php foreach ($orderitems as $orderitem): ?>
                                         <tr class="border-b dark:border-gray-700">
-                                            <td><?= $rowId++ ?></td>
-                                            <input type="hidden" name="id[]" value="<?= $product->id ?>">
+                                            <td>
+                                                <?= $orderitem->vendor ?>
+                                            </td>
                                             <th scope="row"
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                <?= $product->product_name ?>
+                                                <?= $orderitem->name . " . " . "<span style='color: green'>$orderitem->bp_inventory</span>" ?>
                                             </th>
                                             <td class="px-4 py-3">
-                                                <?= $product->branch ?>
+                                            <?= $orderitem->quantity ?>
                                             </td>
-                                            <td class="px-4 py-3">
-                                                <?= $product->quantity ?>
+                                            <td>
+                                                <?= $orderitem->inventory ?>
                                             </td>
-                                            <!--  -->
+                                            <td>
+                                                <?= format_date_time($orderitem->createdAt) ?>
+                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -135,24 +131,23 @@
                     </div>
                 </div>
             </section>
-        </div>
     </section>
 </main>
 </div>
 
 
-<script>
+<!-- <script>
     $(document).ready(function () {
         $('#updateButton').on('click', function () {
             var formData = $('#productTable :input').serializeArray();
             console.log('Data to be sent:', formData);
             $.ajax({
-                url: "<?= site_url('vendorproduct/approve_stock') ?>",
+                url: "<?//= site_url('vendorProduct/update') ?>",
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    console.log('Data updated successfully:', response);
                     location.reload();
+                    console.log('Data updated successfully:', response);
                 },
                 error: function (error) {
                     console.error('Error updating data:', error);
@@ -161,6 +156,6 @@
         });
     });
 
-</script>
+</script> -->
 
 <?php include APPPATH . "/views/includes/footer.php" ?>

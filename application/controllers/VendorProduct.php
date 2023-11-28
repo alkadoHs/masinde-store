@@ -25,6 +25,7 @@ class VendorProduct extends CI_Controller
                    ->join('product p', 'bp.productId = p.id')
                    ->join('user u', 'vp.userId = u.id')
                    ->where('vp.branchId', $branchId)
+                   ->where('vp.status', 'pending')
                 ->get()->result();
     //  echo "<pre>";
     //     print_r($products);
@@ -97,7 +98,53 @@ class VendorProduct extends CI_Controller
 
     public function pending_stock()
     {
-        $this->load->view('stock/pending_stock');
+        $products = $this->db->select('vp.id, p.name as product_name,b.name as branch, vp.quantity')->from('vendorproduct vp')
+                                       ->join('branchproduct bp', 'vp.branchProductId = bp.id')
+                                       ->join('product p', 'bp.productId = p.id')
+                                       ->join('branch b', 'vp.branchId = b.id')
+                                       ->where('vp.status', 'pending')
+                                       ->where('vp.userId', $this->session->userdata('userId'))
+                                    ->get()->result();
+
+        $this->load->view('stocks/pending_stock', ['products' => $products]);
+    }
+
+
+    public function approve_stock()
+    {
+        $userId = $this->session->userdata('userId');
+
+        $ids = $this->input->post('id');
+
+        for ($i = 0; $i < count($ids); $i++) {
+            $this->db->update('vendorproduct', ['status' => 'approved'], ['id' => $ids[$i]]);
+        }
+         $this->session->set_flashdata('vp_approved', 'Stock approved successfully!');
+         
+        echo "success";
+
+        // foreach ($ids as $key => $id) {
+        //     $this->db->update('purchaseorderitem', ['quantity' => $quantities[$key]], ['id' => $id]);
+        // }
+        return;
+
+    }
+
+    public function data()
+    {
+        $branchId = $this->session->userdata('branchId');
+
+        $vendor_products = $this->db->select("vp.*, p.name, bp.inventory as bp_inventory, u.name as vendor")
+            ->from('vendorproduct vp')
+            ->join('branchproduct bp', 'vp.branchProductId = bp.id')
+            ->join('product p', 'bp.productId = p.id')
+            ->order_by('vp.createdAt', 'DESC')
+            ->join('user u', 'vp.userId = u.id')
+            ->where('vp.branchId', $branchId)
+            ->where('vp.status', 'approved')
+            ->get()->result();
+
+        $this->load->view('products/vendor_data', ['orderitems' => $vendor_products]);
         
     }
 

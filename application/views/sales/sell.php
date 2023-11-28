@@ -219,10 +219,15 @@
                         <?php else: ?>
                         <div class="inline-block w-4 h-4 mr-2 bg-green-700 rounded-full"></div>
                         <?php endif; ?>
-                    <?= number_format( $product->vp_inventory) ?>
+                    <?= number_format( $product->inventory) ?>
                 </td>
-                <td><a href="sell/create_cart/<?= $product->id ?>/<?= $product->retailPrice ?>" class="border border-green-300 p-1" href="google.com"><?= number_format($product->retailPrice) ?></a></td>
-                <td><a href="sell/create_cart/<?= $product->id ?>/<?= $product->wholePrice ?>" class="border border-green-300 p-1" href="afyasoft.vercel.app"><?= number_format($product->wholePrice) ?></href=></td>
+                <?php if($product->inventory != 0):?>
+                    <td><a href="sell/create_cart/<?= $product->id ?>/<?= $product->retailPrice ?>" class="border border-green-300 p-1" href="google.com"><?= number_format($product->retailPrice) ?></a></td>
+                    <td><a href="sell/create_cart/<?= $product->id ?>/<?= $product->wholePrice ?>" class="border border-green-300 p-1" href="afyasoft.vercel.app"><?= number_format($product->wholePrice) ?></href=></td>
+                  <?php else:?>
+                    <td><a href="javascript:void" class="border border-green-300 p-1" href="google.com"><?= number_format($product->retailPrice) ?></a></td>
+                    <td><a href="javascript:void" class="border border-green-300 p-1" href="afyasoft.vercel.app"><?= number_format($product->wholePrice) ?></href=></td>
+                  <?php endif ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
