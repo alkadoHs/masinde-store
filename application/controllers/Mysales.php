@@ -41,7 +41,6 @@ class Mysales extends CI_Controller {
                         'customerId'=> $row['customerId'],
                         'total' => $row['totalPrice'],
                         'paid'=> $row['amountPaid'],
-                        'paymentMethod'=> $row['paymentMethod'],
                         'orderItems' => [],
                     ];
                     $current_order_id = $row['id'];

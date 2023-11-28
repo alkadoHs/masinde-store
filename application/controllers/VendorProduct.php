@@ -19,7 +19,7 @@ class VendorProduct extends CI_Controller
 
         $vendors = $this->db->get_where('user', ['role' => 'vendor'])->result();
 
-        $order = $this->db->select("vp.*, p.name, u.name as vendor")
+        $vendor_products = $this->db->select("vp.*, p.name, bp.inventory as bp_inventory, u.name as vendor")
                    ->from('vendorproduct vp')
                    ->join('branchproduct bp', 'vp.branchProductId = bp.id')
                    ->join('product p', 'bp.productId = p.id')
@@ -32,7 +32,7 @@ class VendorProduct extends CI_Controller
     //     return;
         $data = [
             'products' => $products,
-            'orderitems' => $order,
+            'orderitems' => $vendor_products,
             'vendors' => $vendors,
         ];
         $this->load->view('products/vendor_products', $data);
@@ -78,10 +78,27 @@ class VendorProduct extends CI_Controller
         $quantities = $this->input->post('quantity');
 
         for($i = 0; $i < count($ids); $i++) {
-            $this->db->update('vendorproduct', ['quantity' => $quantities[$i]], ['id' => $ids[$i]]);
+            $cartItem = $this->db->get_where('vendorproduct', ['id' => $ids[$i]])->row();
+            $branchProduct = $this->db->select("p.name, bp.inventory")->from('branchproduct bp')
+                ->join('product p', 'bp.productId = p.id')
+                ->where('bp.id', $cartItem->branchProductId)
+                ->get()->row();
+
+            if ($branchProduct->inventory < $quantities[$i]) {
+                $this->session->set_flashdata('exceed_stock2', "Available <b>$branchProduct->name</b> is <b>$branchProduct->inventory</b>: but you're trying to transfer $quantities[$i]");
+                break;
+            }
+            $this->db->update('vendorproduct', ['quantity' => $quantities[$i], 'inventory' => $quantities[$i]], ['id' => $ids[$i]]);
         }
 
         echo "success";
+    }
+
+
+    public function pending_stock()
+    {
+        $this->load->view('stock/pending_stock');
+        
     }
 
 }
