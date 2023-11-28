@@ -114,7 +114,9 @@
                                     <?php $rowId = 1 ?>
                                     <?php foreach ($products as $product): ?>
                                         <tr class="border-b dark:border-gray-700">
-                                            <td><?= $rowId++ ?></td>
+                                            <td>
+                                                <?= $rowId++ ?>
+                                            </td>
                                             <input type="hidden" name="id[]" value="<?= $product->id ?>">
                                             <th scope="row"
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -147,7 +149,7 @@
             var formData = $('#productTable :input').serializeArray();
             console.log('Data to be sent:', formData);
             $.ajax({
-                url: "<?= site_url('vendorproduct/approve_stock') ?>",
+                url: "<?= site_url('vendorProduct/approve_stock') ?>",
                 type: 'POST',
                 data: formData,
                 success: function (response) {
