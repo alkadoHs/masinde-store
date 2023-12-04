@@ -2,12 +2,12 @@
 <?php include APPPATH . "/views/includes/sidebar.php" ?>
 
 <main class="py-4 px-2 lg:px-4 md:ml-64 h-auto pt-20 ">
-    <?php if ($this->session->flashdata('vp_approved')): ?>
+    <?php if ($this->session->flashdata('product_not_availabele')): ?>
         <div id="toast-success"
             class="flex items-center w-full p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
             role="alert">
             <div
-                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                     viewBox="0 0 20 20">
                     <path
@@ -16,7 +16,7 @@
                 <span class="sr-only">Check icon</span>
             </div>
             <div class="ml-3 text-sm font-normal">
-                <?= $this->session->flashdata('vp_approved') ?>
+                <?= $this->session->flashdata('product_not_availabele') ?>
             </div>
             <button type="button"
                 class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
@@ -28,7 +28,7 @@
                 </svg>
             </button>
         </div>
-    <?php elseif ($this->session->flashdata('complete_purchaseorder_success')): ?>
+    <?php elseif ($this->session->flashdata('sr_confirmed')): ?>
         <div id="toast-success"
             class="flex items-center w-full p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
             role="alert">
@@ -42,7 +42,7 @@
                 <span class="sr-only">Check icon</span>
             </div>
             <div class="ml-3 text-sm font-normal">
-                <?= $this->session->flashdata('complete_purchaseorder_success') ?>
+                <?= $this->session->flashdata('sr_confirmed') ?>
             </div>
             <button type="button"
                 class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
@@ -58,8 +58,8 @@
 
 
     <section class="bg-gray-50 dark:bg-gray-900 h-screen flex items-start">
-        <div class="max-w-screen-xl mx-auto  w-full">
-            <h2 class="text-white text-lg font-bold p-3 bg-emerald-900 rounded">PENDING STOCK</h2>
+        <div class="max-w-screen-xl mx-auto lg:px-12 w-full">
+            <h2 class="text-white text-lg font-bold p-3 bg-emerald-900 rounded">Stock Return From Vendor</h2>
             <section class="bg-gray-50 dark:bg-gray-900 py-3">
                 <div class="mx-auto max-w-screen-xl lg:px-4">
                     <!-- Start coding here -->
@@ -95,7 +95,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                                     </svg>
-                                    Approve Stock
+                                    Confirm
                                 </button>
                             </div>
                         </div>
@@ -105,31 +105,36 @@
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th>S/N</th>
+                                        <th scope="col" class="px-4 py-3">VENDOR</th>
                                         <th scope="col" class="px-4 py-3">PRODUCT NAME</th>
-                                        <th scope="col" class="px-4 py-3">FROM BRANCH</th>
                                         <th scope="col" class="px-4 py-3">QUANTITY</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $totalPrice = 0; ?>
+                                    <?php $orderId = null; ?>
                                     <?php $rowId = 1 ?>
-                                    <?php foreach ($products as $product): ?>
+                                    <?php foreach ($orderitems as $orderitem): ?>
                                         <tr class="border-b dark:border-gray-700">
                                             <td>
                                                 <?= $rowId++ ?>
                                             </td>
-                                            <input type="hidden" name="id[]" value="<?= $product->id ?>">
-                                            <input type="hidden" name="bp_id[]" value="<?= $product->bp_id ?>">
                                             <th scope="row"
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                <?= $product->product_name ?>
+                                                <?= $orderitem->vendor ?>
+                                            </th>
+                                            <th scope="row"
+                                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <?= $orderitem->name ?>
                                             </th>
                                             <td class="px-4 py-3">
-                                                <?= $product->branch ?>
+                                                <?= $orderitem->quantity ?>
+                                                <input type="hidden" name="id[]" value="<?= $orderitem->id ?>">
+                                                <input type="hidden" name="vp_id[]"
+                                                    value="<?= $orderitem->vendorProductId ?>">
+                                                <input type="hidden" name="quantity[]" value="<?= $orderitem->quantity ?>"
+                                                    id="quantity" required="">
                                             </td>
-                                            <td class="px-4 py-3">
-                                                <?= $product->quantity ?>
-                                            </td>
-                                            <!--  -->
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -150,7 +155,7 @@
             var formData = $('#productTable :input').serializeArray();
             console.log('Data to be sent:', formData);
             $.ajax({
-                url: "<?= site_url('vendorProduct/approve_stock') ?>",
+                url: "<?= site_url('stock/approve_vendor_return') ?>",
                 type: 'POST',
                 data: formData,
                 success: function (response) {

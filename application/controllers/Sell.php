@@ -7,6 +7,8 @@ class Sell extends CI_Controller
         if (!$this->session->userdata("userId")) {
             return redirect("login");
         }
+        //update all vendor products with zero balance
+        $this->db->update('vendorproduct', ['status' => 'completed'], ['inventory' => 0]);
 
         $cartitems_count = $this->db->select('count(ci.id) as amount')->from('cart c')->join('cartitem ci', 'ci.cartId = c.id')->where('c.userId', $this->session->userdata("userId"))->get()->row();
         // var_dump($cartitems_count);
@@ -17,13 +19,14 @@ class Sell extends CI_Controller
 
         $products = [];
 
-        if($this->session->userdata('position') == "VENDOR") {
+        if ($this->session->userdata('position') == "VENDOR") {
             $products = $this->db->select("vp.inventory as inventory, vp.branchProductId as id, , bp.stockLimit, bp.inventory as bp_iventory, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
                 ->from("vendorproduct vp")
                 ->join('branchproduct bp', 'vp.branchProductId = bp.id')
                 ->join("product p", "bp.productId = p.id")
                 ->where('vp.userId', $this->session->userdata("userId"))
                 ->where('vp.status', 'approved')
+                ->where('vp.inventory !=', 0)
                 ->get()->result();
         } else {
             $products = $this->db->select("bp.*, p.name as productName, p.brand, p.unit, p.buyPrice, p.retailPrice, p.wholePrice")
@@ -176,14 +179,16 @@ class Sell extends CI_Controller
         $this->db->insert('order', $data);
         foreach ($cartItems as $cartItem) {
             $branchProduct = $this->db->get_where('branchproduct', ['id' => $cartItem->branchProductId])->row();
-            
-            $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
-            $newInventory = $branchProduct->inventory - $cartItem->quantity;
-            if($this->session->userdata('position') == "VENDOR") {
+            if ($this->session->userdata('position') == "VENDOR") {
                 $vendorProduct = $this->db->get_where('vendorproduct', ['branchProductId' => $branchProduct->id, 'userId' => $userId])->row();
                 $newInventory2 = $vendorProduct->inventory - $cartItem->quantity;
                 $this->db->update('vendorproduct', ['inventory' => $newInventory2], ['id' => $vendorProduct->id]);
+                $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
+                break;
             }
+            $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
+
+            $newInventory = $branchProduct->inventory - $cartItem->quantity;
 
             $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $branchProduct->id]);
         }
