@@ -6,6 +6,8 @@ class Sell extends CI_Controller
     {
         if (!$this->session->userdata("userId")) {
             return redirect("login");
+        } elseif ($this->session->userdata("position") == "VENDOR") {
+            redirect('vendorCart');
         }
         //update all vendor products with zero balance
         $this->db->update('vendorproduct', ['status' => 'completed'], ['inventory' => 0]);
@@ -20,7 +22,7 @@ class Sell extends CI_Controller
         $products = [];
 
         if ($this->session->userdata('position') == "VENDOR") {
-            $products = $this->db->select("vp.inventory as inventory, vp.branchProductId as id, , bp.stockLimit, bp.inventory as bp_iventory, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
+            $products = $this->db->select("vp.inventory as inventory, vp.branchProductId as id, bp.stockLimit, bp.inventory as bp_iventory, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
                 ->from("vendorproduct vp")
                 ->join('branchproduct bp', 'vp.branchProductId = bp.id')
                 ->join("product p", "bp.productId = p.id")
@@ -29,7 +31,7 @@ class Sell extends CI_Controller
                 ->where('vp.inventory !=', 0)
                 ->get()->result();
         } else {
-            $products = $this->db->select("bp.*, p.name as productName, p.brand, p.unit, p.buyPrice, p.retailPrice, p.wholePrice")
+            $products = $this->db->select("bp.*, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
                 ->from("branchproduct bp")
                 ->join("product p", "bp.productId = p.id", "left")
                 ->where("bp.branchId", $this->session->userdata("branchId"))
@@ -65,7 +67,7 @@ class Sell extends CI_Controller
     {
         $productStock = $this->db->get_where('branchproduct', ['id' => $product_id])->row();
         if ($productStock->inventory < 1) {
-            $this->session->set_flashdata('less_stock', 'Srock not enough!');
+            $this->session->set_flashdata('less_stock', 'Stock not enough!');
 
             return redirect('sell');
         }
@@ -184,17 +186,17 @@ class Sell extends CI_Controller
                 $newInventory2 = $vendorProduct->inventory - $cartItem->quantity;
                 $this->db->update('vendorproduct', ['inventory' => $newInventory2], ['id' => $vendorProduct->id]);
                 $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
-                break;
+            } else {
+                $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
+
+                $newInventory = $branchProduct->inventory - $cartItem->quantity;
+
+                $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $branchProduct->id]);
             }
-            $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
-
-            $newInventory = $branchProduct->inventory - $cartItem->quantity;
-
-            $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $branchProduct->id]);
         }
 
         $this->db->set('total', 'total + ' . $data['amountPaid'], false);
-        $this->db->where('branchId', $branchProduct->branchId);
+        $this->db->where('branchId', 1);
         $this->db->update('sales');
 
         $this->db->delete('cart', ['id' => $cartId]);
@@ -208,19 +210,42 @@ class Sell extends CI_Controller
     {
         $branchId = $this->session->userdata('branchId');
         $userId = $this->session->userdata('userId');
+        $position = $this->session->userdata('position');
 
-        if (empty($branchId)) {
+        if (empty($userId)) {
             return redirect('login');
         }
 
-        $orders = $this->db->select('o.*, u.name as seller')
-            ->from('order o')
-            ->join('user u', 'o.userId = u.id')
-            ->where('o.amountPaid != o.totalPrice')
-            ->where('o.branchId', $branchId)
-            ->order_by('o.createdAt', 'desc')
-            ->get()
-            ->result();
+        $orders = [];
+
+        if ($position == "ADMIN") {
+            $orders = $this->db->select('o.*, u.name as seller')
+                ->from('order o')
+                ->join('user u', 'o.userId = u.id')
+                ->where('o.amountPaid != o.totalPrice')
+                ->order_by('o.createdAt', 'desc')
+                ->get()
+                ->result();
+        } elseif ($position == "VENDOR") {
+            $orders = $this->db->select('o.*, u.name as seller')
+                ->from('order o')
+                ->join('user u', 'o.userId = u.id')
+                ->where('o.amountPaid != o.totalPrice')
+                ->where('o.userId', $userId)
+                ->order_by('o.createdAt', 'DESC')
+                ->get()
+                ->result();
+        } else {
+            $orders = $this->db->select('o.*, u.name as seller')
+                ->from('order o')
+                ->join('user u', 'o.userId = u.id')
+                ->where('o.amountPaid != o.totalPrice')
+                ->where('o.branchId', $branchId)
+                ->order_by('o.createdAt', 'desc')
+                ->get()
+                ->result();
+        }
+
 
         $data = [
             'orders' => $orders
@@ -232,7 +257,6 @@ class Sell extends CI_Controller
 
     public function pay_credit_sales()
     {
-        $branchId = $this->input->post('branchId');
         $id = $this->input->post('order_id');
 
         $data = [
@@ -248,7 +272,7 @@ class Sell extends CI_Controller
         $this->db->update('order');
 
         $this->db->set('total', 'total + ' . $data['amountPaid'], false);
-        $this->db->where('branchId', $branchId);
+        $this->db->where('branchId', 1);
         $this->db->update('sales');
         $this->db->trans_complete();
 

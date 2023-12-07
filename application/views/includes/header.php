@@ -1,4 +1,4 @@
-<?php 
+<?php
 $userId = $this->session->userdata("userId");
 $dUser = $this->db->select('u.branchId, b.name as branch')->from('user u')->join('branch b', 'u.branchId = b.id')->where('u.id', $userId)->get()->row();
 
@@ -15,29 +15,34 @@ $firstName = $this->session->userdata("firstName");
 $lastName = $this->session->userdata("lastName");
 $branchName = $this->session->userdata("branchName");
 $branchId = $this->session->userdata("branchId");
-$position =  $this->session->userdata("position");
+$position = $this->session->userdata("position");
 
 
-$this->session->set_userdata( $array );
+$this->session->set_userdata($array);
 
 
-function format_price($price) {
-    return number_format($price) . "/=";
+function format_price($price)
+{
+  return number_format($price) . "/=";
 }
-function format_date_time($date) {
-    return date('d M Y H:i:s', strtotime($date));
-}
-
-function format_date($date) {
-    return date('d M Y H:i', strtotime($date));
+function format_date_time($date)
+{
+  return date('d M Y H:i:s', strtotime($date));
 }
 
-function format_date_only($date) {
-    return date('d M Y', strtotime($date));
+function format_date($date)
+{
+  return date('d M Y H:i', strtotime($date));
 }
 
-function format_time_only($date) {
-    return date('H:i', strtotime($date));
+function format_date_only($date)
+{
+  return date('d M Y', strtotime($date));
+}
+
+function format_time_only($date)
+{
+  return date('H:i', strtotime($date));
 }
 
 
@@ -99,114 +104,116 @@ function format_time_only($date) {
 // }
 
 
-function format_date_ago($date) {
-    $time_ago = strtotime($date);
-    $current_time = time();
-    $time_difference = $current_time - $time_ago;
-    $seconds = $time_difference;
-    $minutes = $seconds / 60;  
-    $hours = $minutes / 60; 
-    $days = $hours / 24; 
-    $weeks = $days / 7; 
-    $months = $days / 30.44; 
-    $years = $days / 365.25; 
+function format_date_ago($date)
+{
+  $time_ago = strtotime($date);
+  $current_time = time();
+  $time_difference = $current_time - $time_ago;
+  $seconds = $time_difference;
+  $minutes = $seconds / 60;
+  $hours = $minutes / 60;
+  $days = $hours / 24;
+  $weeks = $days / 7;
+  $months = $days / 30.44;
+  $years = $days / 365.25;
 
-    if ($seconds <= 60) {
-        return "$seconds ago";
-    } elseif ($minutes <= 60) {
-        if (floor($minutes) == 1) {
-            return "one minute ago";
-        } else {
-            return floor($minutes) . " minutes ago";
-        }
-    } elseif ($hours <= 24) {
-        if (floor($hours) == 1) {
-            return "an hour ago";
-        } else {
-            return floor($hours) . " hrs ago";
-        }
-    } elseif ($days <= 7) {
-        if (floor($days) == 1) {
-            return "yesterday";
-        } else {
-            return floor($days) . " days ago";
-        }
-    } elseif ($weeks <= 4.3) {
-        if (floor($weeks) == 1) {
-            return "a week ago";
-        } else {
-            return floor($weeks) . " weeks ago";
-        }
-    } elseif ($months <= 12) {
-        if (floor($months) == 1) {
-            return "a month ago";
-        } else {
-            return floor($months) . " months ago";
-        }
+  if ($seconds <= 60) {
+    return "$seconds ago";
+  } elseif ($minutes <= 60) {
+    if (floor($minutes) == 1) {
+      return "one minute ago";
     } else {
-        if (floor($years) == 1) {
-            return "one year ago";
-        } else {
-            return floor($years) . " years ago";
-        }
+      return floor($minutes) . " minutes ago";
     }
+  } elseif ($hours <= 24) {
+    if (floor($hours) == 1) {
+      return "an hour ago";
+    } else {
+      return floor($hours) . " hrs ago";
+    }
+  } elseif ($days <= 7) {
+    if (floor($days) == 1) {
+      return "yesterday";
+    } else {
+      return floor($days) . " days ago";
+    }
+  } elseif ($weeks <= 4.3) {
+    if (floor($weeks) == 1) {
+      return "a week ago";
+    } else {
+      return floor($weeks) . " weeks ago";
+    }
+  } elseif ($months <= 12) {
+    if (floor($months) == 1) {
+      return "a month ago";
+    } else {
+      return floor($months) . " months ago";
+    }
+  } else {
+    if (floor($years) == 1) {
+      return "one year ago";
+    } else {
+      return floor($years) . " years ago";
+    }
+  }
 }
 
 
-function format_date_ago_only($date) {
-    $time_ago = strtotime($date);
-    $current_time = time();
-    $time_difference = $current_time - $time_ago;
-    $seconds = $time_difference;
-    $minutes = round($seconds / 60); // value 60 is seconds  
-    $hours = round($seconds / 3600); //value 3600 is 60 minutes * 60 sec  
-    $days = round($seconds / 86400); //86400 = 24 * 60 * 60;  
-    $weeks = round($seconds / 604800); // 7*24*60*60;  
-    $months = round($seconds / 2629440); //((365+365+365+365+366)/5/12)*24*60*60  
-    $years = round($seconds / 31553280); //(365+365+365+365+366)/5 * 24 * 60 * 60
-    if ($seconds <= 60) {
-        return "Just Now";
-    } elseif ($minutes <= 60) {
-        if ($minutes == 1) {
-            return "1m";
-        } else {
-            return "$minutes m";
-        }
-    } elseif ($hours <= 24) {
-        if ($hours == 1) {
-            return "1h";
-        } else {
-            return "$hours h";
-        }
-    } elseif ($days <= 7) {
-        if ($days == 1) {
-            return "1d";
-        } else {
-            return
-
-                "$days d";
-        } 
-
-    } elseif ($weeks <= 4.3) //4.3 == 52/12
-    {
-        if ($weeks == 1) {
-            return "1w";
-        } else {
-            return "$weeks w";
-        }
-    } elseif ($months <= 12) {
-        if ($months == 1) {
-            return "1m";
-        } else {
-            return "$months m";
-        }
+function format_date_ago_only($date)
+{
+  $time_ago = strtotime($date);
+  $current_time = time();
+  $time_difference = $current_time - $time_ago;
+  $seconds = $time_difference;
+  $minutes = round($seconds / 60); // value 60 is seconds  
+  $hours = round($seconds / 3600); //value 3600 is 60 minutes * 60 sec  
+  $days = round($seconds / 86400); //86400 = 24 * 60 * 60;  
+  $weeks = round($seconds / 604800); // 7*24*60*60;  
+  $months = round($seconds / 2629440); //((365+365+365+365+366)/5/12)*24*60*60  
+  $years = round($seconds / 31553280); //(365+365+365+365+366)/5 * 24 * 60 * 60
+  if ($seconds <= 60) {
+    return "Just Now";
+  } elseif ($minutes <= 60) {
+    if ($minutes == 1) {
+      return "1m";
     } else {
-        if ($years == 1) {
-            return "1y";
-        } else {
-            return "$years y";
-        }
-    } 
+      return "$minutes m";
+    }
+  } elseif ($hours <= 24) {
+    if ($hours == 1) {
+      return "1h";
+    } else {
+      return "$hours h";
+    }
+  } elseif ($days <= 7) {
+    if ($days == 1) {
+      return "1d";
+    } else {
+      return
+
+        "$days d";
+    }
+
+  } elseif ($weeks <= 4.3) //4.3 == 52/12
+  {
+    if ($weeks == 1) {
+      return "1w";
+    } else {
+      return "$weeks w";
+    }
+  } elseif ($months <= 12) {
+    if ($months == 1) {
+      return "1m";
+    } else {
+      return "$months m";
+    }
+  } else {
+    if ($years == 1) {
+      return "1y";
+    } else {
+      return "$years y";
+    }
+  }
 }
 ?>
 
@@ -214,167 +221,161 @@ function format_date_ago_only($date) {
 
 <!DOCTYPE html>
 <html lang="en" class="">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<?php echo base_url("assets/css/datatable.css") ?>">
-    <link rel="stylesheet" href="<?php echo base_url("assets/css/select2.css") ?>">
-    <link rel="stylesheet" href="<?php echo base_url("assets/css/styles.css") ?>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <script src="<?php echo base_url("assets/js/jquery.js") ?>"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/datepicker.min.js"></script>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter&family=Open+Sans:wght@300&display=swap');
-        * {
-          scroll-behavior: smooth;
-        }
-      
-      body {
-            font-family: 'Inter', sans-serif !important;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="<?php echo base_url("assets/css/datatable.css") ?>">
+  <link rel="stylesheet" href="<?php echo base_url("assets/css/select2.css") ?>">
+  <link rel="stylesheet" href="<?php echo base_url("assets/css/styles.css") ?>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script src="<?php echo base_url("assets/js/jquery.js") ?>"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/datepicker.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&family=Open+Sans:wght@300&display=swap');
 
-      .dataTables_wrapper {
-        padding: 1.12rem 0;
-        border-radius: 10px;
-        overflow-y: auto;
-      }
+    * {
+      scroll-behavior: smooth;
+    }
 
-      .dataTables_wrapper table {
-        padding: 4px 0;
-      }
+    body {
+      font-family: 'Inter', sans-serif !important;
+    }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background-color: white;
-        }
+    .dataTables_wrapper {
+      padding: 1.12rem 0;
+      border-radius: 10px;
+      overflow-y: auto;
+    }
 
-        .tb-wrapper {
-            overflow: auto;
-            position: relative;
-            background-color: #ddd;
-            white-space: nowrap;
-            padding: 8px;
-            border-radius: 6px;
-            max-height: 500px;
-        }
-        thead tr {
-            border-radius: 6px;
-        }
+    .dataTables_wrapper table {
+      padding: 4px 0;
+    }
 
-        tfoot th {
-          padding: 6px 8px;
-          text-align: left;
-        }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: white;
+    }
 
-        /* .fth, .ftd {
+    .tb-wrapper {
+      overflow: auto;
+      position: relative;
+      background-color: #ddd;
+      white-space: nowrap;
+      padding: 8px;
+      border-radius: 6px;
+      max-height: 500px;
+    }
+
+    thead tr {
+      border-radius: 6px;
+    }
+
+    tfoot th {
+      padding: 6px 8px;
+      text-align: left;
+    }
+
+    /* .fth, .ftd {
             position: sticky;
             left: 2px;
             background-color: #eee;
         } */
 
-        table,thead th, tbody tr {
-            border: 1px solid #ccc;
-        }
+    table,
+    thead th,
+    tbody tr {
+      border: 1px solid #ccc;
+    }
 
-        thead th {
-            position: sticky;
-            top: 2px;
-            background-color: #0369a1;
-            text-align: left;
-            color: white;
-        }
+    thead th {
+      position: sticky;
+      top: 2px;
+      background-color: #0369a1;
+      text-align: left;
+      color: white;
+    }
 
-        tbody tr:nth-child(even) {
-            background-color: #eee;
-        }
+    tbody tr:nth-child(even) {
+      background-color: #eee;
+    }
 
-        tbody tr:hover {
-            background-color: #ddd;
-        }
+    tbody tr:hover {
+      background-color: #ddd;
+    }
 
-        td, thead th {
-            padding: 6px 10px;
-        }
+    td,
+    thead th {
+      padding: 6px 10px;
+    }
 
-        tfoot td {
-            display: flex;
-            gap: 4px;
-        }
-    </style>
-    <title>Masinde Store</title>
+    tfoot td {
+      display: flex;
+      gap: 4px;
+    }
+  </style>
+  <title>Masinde Store</title>
 </head>
+
 <body class="dark:bg-gray-900">
 
-<div class="antialiased bg-gray-50 dark:bg-gray-900">
-    <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
+  <div class="antialiased bg-gray-50 dark:bg-gray-900">
+    <nav
+      class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
-          <button
-            data-drawer-target="drawer-navigation"
-            data-drawer-toggle="drawer-navigation"
+          <button data-drawer-target="drawer-navigation" data-drawer-toggle="drawer-navigation"
             aria-controls="drawer-navigation"
-            class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
+            class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
-              ></path>
+                clip-rule="evenodd"></path>
             </svg>
-            <svg
-              aria-hidden="true"
-              class="hidden w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
+            <svg aria-hidden="true" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
+                clip-rule="evenodd"></path>
             </svg>
             <span class="sr-only">Toggle sidebar</span>
           </button>
           <a href="#" class="flex items-center justify-between mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-8 h-8 text-rose-600 animate-pulse">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-          </svg>
-          <span class="self-center text-2xl font-semibold whitespace-nowrap hidden md:grid"> 
-             <span class="text-gray-700 text-xl block"><?= $branchName ?></span>
-          </span>
-          
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="mr-2 w-8 h-8 text-rose-600 animate-pulse">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+            </svg>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap hidden md:grid">
+              <span class="text-gray-700 text-xl block">
+                <?= $branchName ?>
+              </span>
+            </span>
+
           </a>
-          
+
         </div>
         <div class="flex items-center lg:order-2">
-          <button
-            type="button"
-            data-drawer-toggle="drawer-navigation"
-            aria-controls="drawer-navigation"
-            class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-          >
+          <button type="button" data-drawer-toggle="drawer-navigation" aria-controls="drawer-navigation"
+            class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
             <span class="sr-only">Toggle search</span>
-            <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path clip-rule="evenodd" fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"></path>
+            <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path clip-rule="evenodd" fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z">
+              </path>
             </svg>
           </button>
           <!-- switch branch -->
-          <?php if($position == 'ADMIN' || $position == 'VENDOR'):?>
-          <select name="branch" class="w-16 h-10 rounded" id="switchBranch">
-            <option value="0">----</option>
-            <option value="1">MAIN</option>
-            <option value="2">UYOLE</option>
-            <option value="3">MBALIZI</option>
-          </select>
+          <?php if ($position == 'ADMIN'): ?>
+            <select name="branch" class="w-16 h-10 rounded" id="switchBranch">
+              <option value="0">----</option>
+              <option value="1">MAIN</option>
+              <option value="2">UYOLE</option>
+              <option value="3">MBALIZI</option>
+            </select>
           <?php endif ?>
           <!-- Dropdown menu
           <div
@@ -643,12 +644,12 @@ function format_date_ago_only($date) {
             </a>
           </div> -->
           <!-- Apps -->
-          <button
+          <!-- <button
             type="button"
             data-dropdown-toggle="apps-dropdown"
             class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100  focus:ring-4 focus:ring-gray-300"
-          >
-            <!-- <span class="sr-only">View notifications</span>
+          > -->
+          <!-- <span class="sr-only">View notifications</span>
              Icon
             <svg
               class="w-6 h-6"
@@ -660,7 +661,7 @@ function format_date_ago_only($date) {
                 d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
               ></path>
             </svg> -->
-          </button>
+          <!-- </button> -->
           <!-- Dropdown menu
           <div
             class="hidden overflow-hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg dark:bg-gray-700 dark:divide-gray-600 rounded-xl"
@@ -861,33 +862,27 @@ function format_date_ago_only($date) {
               </a>
             </div>
           </div> -->
-          <button
-            type="button"
+          <button type="button"
             class="flex mx-3 text-sm bg-gray-100 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 "
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="dropdown"
-          >
+            id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
             <span class="sr-only">Open user menu</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 rounded-full">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+              stroke="currentColor" class="w-8 h-8 rounded-full">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
 
           </button>
           <!-- Dropdown menu -->
-          <div
-            class="hidden z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow rounded-xl"
-            id="dropdown"
-          >
+          <div class="hidden z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow rounded-xl"
+            id="dropdown">
             <div class="py-3 px-4">
-              <span
-                class="block text-sm font-semibold text-gray-900"
-                ><?= $username ?></span
-              >
-              <span
-                class="block text-sm text-gray-900 truncate"
-                ><?= $position ?></span
-              >
+              <span class="block text-sm font-semibold text-gray-900">
+                <?= $username ?>
+              </span>
+              <span class="block text-sm text-gray-900 truncate">
+                <?= $position ?>
+              </span>
             </div>
             <!-- <ul
               class="py-1 text-gray-700 dark:text-gray-300"
@@ -985,16 +980,11 @@ function format_date_ago_only($date) {
                 </a>
               </li>
             </ul> -->
-            <ul
-              class="py-1 text-gray-700 dark:text-gray-300"
-              aria-labelledby="dropdown"
-            >
+            <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
               <li>
-                <a
-                  href="<?= site_url('login/logout') ?>"
-                  class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  >Sign out</a
-                >
+                <a href="<?= site_url('login/logout') ?>"
+                  class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
+                  out</a>
               </li>
             </ul>
           </div>

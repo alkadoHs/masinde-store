@@ -9,36 +9,35 @@ class Login extends CI_Controller
     }
 
 
-    public function auth() {
+    public function auth()
+    {
         $this->form_validation->set_rules('username', 'Username', 'trim');
         $this->form_validation->set_rules('password', 'Password', 'trim');
 
         $username = $this->input->post('username');
         $password = $this->input->post('password');
-   
+
         if ($this->form_validation->run()) {
             $user = $this->db->get_where("user", ["username" => $username])->row();
-            if($user) {
+            if ($user) {
                 //verify password
                 $authenticatedUser = password_verify($password, $user->password);
-                if($authenticatedUser) {
+                if ($authenticatedUser) {
                     $userdata = $this->db->select("u.*, b.name as branch")
-                                 ->from("user u")
-                                 ->join("branch b", "u.branchid = b.id")
-                                 ->where("u.id", $user->id)
-                               ->get()->row();
+                        ->from("user u")
+                        ->join("branch b", "u.branchid = b.id")
+                        ->where("u.id", $user->id)
+                        ->get()->row();
                     $data = [
                         "userId" => $user->id,
-                        "username"=> $userdata->username,
-                        "firstName" => $userdata->firstName,
-                        "lastName"=> $userdata->lastName,
+                        "username" => $userdata->username,
                         "branchId" => $userdata->branchId,
                         "branchName" => $userdata->branch,
                         "position" => $userdata->role,
                     ];
                     $this->session->set_userdata($data);
 
-                    if($userdata->role == "ADMIN") {
+                    if ($userdata->role == "ADMIN") {
                         return redirect('dashboard');
                     } else {
                         return redirect('mysales');
@@ -57,7 +56,7 @@ class Login extends CI_Controller
 
     public function logout()
     {
-        $this->session->unset_userdata(['username','userId','branchId', 'branchName','position']);
+        $this->session->unset_userdata(['username', 'userId', 'branchId', 'branchName', 'position']);
         return redirect('login');
     }
 }
