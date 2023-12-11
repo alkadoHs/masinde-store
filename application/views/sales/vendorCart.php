@@ -329,7 +329,7 @@
             var formData = $('#updateTable :input').serializeArray();
             console.log('Data to be sent:', formData);
             $.ajax({
-                url: "<?= site_url('vendorCart /update_cart/')?>",
+                url: "<?= site_url('vendorCart/update_cart/')?>",
                 type: 'POST',
                 data: formData,
                 success: function (response) {
