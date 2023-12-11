@@ -82,7 +82,7 @@ class vendorCart extends CI_Controller
             if ($vendorcartitemExist) {
                 $this->db->set('quantity', 'quantity + 1', false);
                 $this->db->where('cartId', $cartExist->id);
-                $this->db->where('branchProductId', $product_id);
+                $this->db->where('vendorProductId', $product_id);
                 $this->db->where('price', $price);
                 $this->db->update('vendorcartitem');
 
