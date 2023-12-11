@@ -120,7 +120,7 @@ class vendorCart extends CI_Controller
             $vendorcartitem = $this->db->get_where('vendorcartitem', ['id' => $ids[$i]])->row();
             $vendorProduct = $this->db->select("p.name, vp.inventory")
                 ->from('vendorproduct vp')
-                ->join('branchProduct bp', 'vp.branchProductId = bp.id')
+                ->join('branchproduct bp', 'vp.branchProductId = bp.id')
                 ->join('product p', 'bp.productId = p.id')
                 ->where('vp.id', $vendorcartitem->vendorProductId)
                 ->get()->row();
@@ -167,13 +167,13 @@ class vendorCart extends CI_Controller
         $vendorcartitems = $this->db->select("vci.*, vp.branchProductId")->from('vendorcartitem vci')->join("vendorproduct vp", "vci.vendorProductId = vp.id")->where("vci.cartId", $cartId)->get()->result();
         $this->db->insert('order', $data);
         foreach ($vendorcartitems as $vendorcartitem) {
-            $vendorProduct = $this->db->get_where('vendorProduct', ['id' => $vendorcartitem->vendorProductId])->row();
+            $vendorProduct = $this->db->get_where('vendorproduct', ['id' => $vendorcartitem->vendorProductId])->row();
 
             $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $vendorcartitem->branchProductId, 'quantity' => $vendorcartitem->quantity, 'price' => $vendorcartitem->price]);
 
             $newInventory = $vendorProduct->inventory - $vendorcartitem->quantity;
 
-            $this->db->update('vendorProduct', ['inventory' => $newInventory], ['id' => $vendorProduct->id]);
+            $this->db->update('vendorproduct', ['inventory' => $newInventory], ['id' => $vendorProduct->id]);
         }
 
         $this->db->set('total', 'total + ' . $data['amountPaid'], false);
