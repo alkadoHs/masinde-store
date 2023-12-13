@@ -17,24 +17,12 @@ class Sell extends CI_Controller
             $this->db->delete('cart', ['userId' => $this->session->userdata("userId")]);
         }
 
-        $products = [];
-
-        if ($this->session->userdata('position') == "VENDOR") {
-            $products = $this->db->select("vp.inventory as inventory, vp.branchProductId as id, bp.stockLimit, bp.inventory as bp_iventory, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
-                ->from("vendorproduct vp")
-                ->join('branchproduct bp', 'vp.branchProductId = bp.id')
-                ->join("product p", "bp.productId = p.id")
-                ->where('vp.userId', $this->session->userdata("userId"))
-                ->where('vp.status', 'approved')
-                ->where('vp.inventory !=', 0)
-                ->get()->result();
-        } else {
-            $products = $this->db->select("bp.*, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
-                ->from("branchproduct bp")
-                ->join("product p", "bp.productId = p.id", "left")
-                ->where("bp.branchId", $this->session->userdata("branchId"))
-                ->get()->result();
-        }
+       
+        $products = $this->db->select("bp.*, p.name as productName, p.buyPrice, p.retailPrice, p.wholePrice")
+            ->from("branchproduct bp")
+            ->join("product p", "bp.productId = p.id", "left")
+            ->where("bp.branchId", $this->session->userdata("branchId"))
+            ->get()->result();
 
 
         $cartItems = $this->db->select("ci.*, p.name")
