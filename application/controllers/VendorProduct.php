@@ -148,7 +148,6 @@ class VendorProduct extends CI_Controller
             ->join('product p', 'bp.productId = p.id')
             ->order_by('vp.createdAt', 'DESC')
             ->join('user u', 'vp.userId = u.id')
-            ->where('vp.branchId', $branchId)
             ->where('vp.status', 'approved')
             ->get()->result();
 
