@@ -57,7 +57,7 @@
                         <h2 class="text-2xl text-gray-700 font-semibold">Vendor Data</h2>
                         <p class="text-gray-400">Track what your vendors are doing here!</p>
                         <div class="overflow-x-auto">
-                            <table id="productTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <table id="example" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
                                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
