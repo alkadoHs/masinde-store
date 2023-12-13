@@ -56,7 +56,7 @@
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <h2 class="text-2xl text-gray-700 font-semibold">Vendor Data</h2>
                         <p class="text-gray-400">Track what your vendors are doing here!</p>
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto whitespace-nowrap">
                             <table id="example" class="display">
                                 <thead>
                                     <tr>
