@@ -149,7 +149,7 @@ class VendorProduct extends CI_Controller
             ->order_by('vp.createdAt', 'DESC')
             ->join('user u', 'vp.userId = u.id')
             ->where('vp.branchId', $branchId)
-            ->where("vp.status = 'approved' OR vp.status = 'completed'")
+            ->where("vp.status = 'approved'")
             ->get()->result();
 
         $this->load->view('products/vendor_data', ['orderitems' => $vendor_products]);
