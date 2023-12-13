@@ -55,7 +55,7 @@
                     <!-- Start coding here -->
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                         <h2 class="text-2xl text-gray-700 font-semibold">Vendor Data</h2>
-                        <p class="text-gray-400">Tranck what your vendors are doing here!</p>
+                        <p class="text-gray-400">Track what your vendors are doing here!</p>
                         <div class="overflow-x-auto">
                             <table id="productTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
