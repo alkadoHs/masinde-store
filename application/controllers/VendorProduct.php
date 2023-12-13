@@ -141,15 +141,30 @@ class VendorProduct extends CI_Controller
     public function data()
     {
         $branchId = $this->session->userdata('branchId');
+        $role = $this->session->userdata('position');
 
-        $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, vp.createdAt, p.name, bp.inventory as bp_inventory, u.name as vendor")
-            ->from('vendorproduct vp')
-            ->join('branchproduct bp', 'vp.branchProductId = bp.id')
-            ->join('product p', 'bp.productId = p.id')
-            ->order_by('vp.createdAt', 'DESC')
-            ->join('user u', 'vp.userId = u.id')
-            ->where('vp.status', 'approved')
-            ->get()->result();
+        $branch_products = [];
+        if($role == 'ADMIN') {
+            $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, vp.createdAt, p.name, bp.inventory as bp_inventory, u.name as vendor")
+                ->from('vendorproduct vp')
+                ->join('branchproduct bp', 'vp.branchProductId = bp.id')
+                ->join('product p', 'bp.productId = p.id')
+                ->order_by('vp.createdAt', 'DESC')
+                ->join('user u', 'vp.userId = u.id')
+                ->where('vp.status', 'approved')
+                ->get()->result();
+        } else {
+            $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, vp.createdAt, p.name, bp.inventory as bp_inventory, u.name as vendor")
+                ->from('vendorproduct vp')
+                ->join('branchproduct bp', 'vp.branchProductId = bp.id')
+                ->join('product p', 'bp.productId = p.id')
+                ->order_by('vp.createdAt', 'DESC')
+                ->join('user u', 'vp.userId = u.id')
+                ->where('vp.branchId', $branchId)
+                ->where('vp.status', 'approved')
+                ->get()->result();
+        }
+
 
         $this->load->view('products/vendor_data', ['orderitems' => $vendor_products]);
     }
