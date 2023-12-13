@@ -57,9 +57,8 @@
                         <h2 class="text-2xl text-gray-700 font-semibold">Vendor Data</h2>
                         <p class="text-gray-400">Track what your vendors are doing here!</p>
                         <div class="overflow-x-auto">
-                            <table id="example" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead
-                                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <table id="example">
+                                <thead>
                                     <tr>
                                         <th style="font-weight: 400; font-size: small">VENDOR</th>
                                         <th style="font-weight: 400; font-size: small">FROM BRANCH</th>
@@ -67,22 +66,20 @@
                                         <th style="font-weight: 400; font-size: small">QUANTITY</th>
                                         <th style="font-weight: 400; font-size: small">REMAINED</th>
                                         <th style="font-weight: 400; font-size: small">DATE</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $totalPrice = 0; ?>
                                     <?php $orderId = null; ?>
                                     <?php foreach ($orderitems as $orderitem): ?>
-                                        <tr class="border-b dark:border-gray-700">
+                                        <tr>
                                             <td>
                                                 <?= $orderitem->vendor ?>
                                             </td>
                                             <td>
                                                 <?= $orderitem->branch ?>
                                             </td>
-                                            <th scope="row"
-                                                class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <th>
                                                 <?= $orderitem->name ?>
                                             </th>
                                             <td class="px-4 py-3">
