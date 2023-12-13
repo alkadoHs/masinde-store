@@ -47,48 +47,15 @@
     <section class="bg-gray-50 dark:bg-gray-900 h-screen flex items-start">
         <div class="max-w-screen-xl mx-auto lg:px-12 w-full">
             <!-- Start coding here -->
-            
+
 
 
             <section class="bg-gray-50 dark:bg-gray-900 py-3">
                 <div class="mx-auto max-w-screen-xl lg:px-4">
                     <!-- Start coding here -->
                     <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-                        <div
-                            class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                            <!-- <div class="w-full md:w-1/2">
-                                <form class="flex items-center">
-                                    <label for="simple-search" class="sr-only">Search</label>
-                                    <div class="relative w-full">
-                                        <div
-                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                fill="currentColor" viewbox="0 0 20 20"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd"
-                                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                        <input type="text" readonly id="simple-search"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500"
-                                            placeholder="Search" required="">
-                                    </div>
-                                </form>
-                            </div> -->
-                            <!-- <div
-                                class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                                <button id="updateButton" type="button"
-                                    class="flex items-center justify-center text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-sky-600 dark:hover:bg-sky-700 focus:outline-none dark:focus:ring-sky-800">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                                    </svg>
-                                    Update
-                                </button>
-                            </div> -->
-                        </div>
+                        <h2 class="text-2xl text-gray-700 font-semibold">Vendor Data</h2>
+                        <p class="text-gray-400">Tranck what your vendors are doing here!</p>
                         <div class="overflow-x-auto">
                             <table id="productTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead
@@ -99,7 +66,7 @@
                                         <th style="font-weight: 400; font-size: small">QUANTITY</th>
                                         <th style="font-weight: 400; font-size: small">REMAINED</th>
                                         <th style="font-weight: 400; font-size: small">DATE</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -112,10 +79,10 @@
                                             </td>
                                             <th scope="row"
                                                 class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                <?= $orderitem->name . " . " . "<span style='color: green'>$orderitem->bp_inventory</span>" ?>
+                                                <?= $orderitem->name ?>
                                             </th>
                                             <td class="px-4 py-3">
-                                            <?= $orderitem->quantity ?>
+                                                <?= $orderitem->quantity ?>
                                             </td>
                                             <td>
                                                 <?= $orderitem->inventory ?>
@@ -142,7 +109,7 @@
             var formData = $('#productTable :input').serializeArray();
             console.log('Data to be sent:', formData);
             $.ajax({
-                url: "<?//= site_url('vendorProduct/update') ?>",
+                url: "<? //= site_url('vendorProduct/update') ?>",
                 type: 'POST',
                 data: formData,
                 success: function (response) {
