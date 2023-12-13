@@ -131,11 +131,20 @@ class Stock extends CI_Controller
             ->get()->result();
 
 
-        $order = $this->db->select("tp.*, p.name, p.brand")
+        $order = $this->db->select("tp.*,bp.inventory as stock, p.name, b.name as branch")
             ->from('transferedproduct tp')
             ->join('branchproduct bp', 'tp.branchProductId = bp.id')
             ->join('product p', 'bp.productId = p.id')
+            ->join('branch b', 'tp.toBranchId = b.id')
             ->where('tp.status', 'pending')
+            ->get()->result();
+
+        $transfered_products = $this->db->select("tp.*, bp.inventory as stock, p.name,  b.name as branch")
+            ->from('transferedproduct tp')
+            ->join('branchproduct bp', 'tp.branchProductId = bp.id')
+            ->join('product p', 'bp.productId = p.id')
+            ->join('branch b', 'tp.toBranchId = b.id')
+            ->where('tp.status', 'transfered')
             ->get()->result();
         //  echo "<pre>";
         //     print_r($products);
@@ -144,6 +153,7 @@ class Stock extends CI_Controller
         $data = [
             'products' => $products,
             'orderitems' => $order,
+            'transfered_products' => $transfered_products,
         ];
         $this->load->view("stocks/transfer", $data);
     }
