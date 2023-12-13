@@ -9,8 +9,6 @@ class Sell extends CI_Controller
         } elseif ($this->session->userdata("position") == "VENDOR") {
             redirect('vendorCart');
         }
-        //update all vendor products with zero balance
-        $this->db->update('vendorproduct', ['status' => 'completed'], ['inventory' => 0]);
 
         $cartitems_count = $this->db->select('count(ci.id) as amount')->from('cart c')->join('cartitem ci', 'ci.cartId = c.id')->where('c.userId', $this->session->userdata("userId"))->get()->row();
         // var_dump($cartitems_count);
@@ -181,18 +179,12 @@ class Sell extends CI_Controller
         $this->db->insert('order', $data);
         foreach ($cartItems as $cartItem) {
             $branchProduct = $this->db->get_where('branchproduct', ['id' => $cartItem->branchProductId])->row();
-            if ($this->session->userdata('position') == "VENDOR") {
-                $vendorProduct = $this->db->get_where('vendorproduct', ['branchProductId' => $branchProduct->id, 'userId' => $userId])->row();
-                $newInventory2 = $vendorProduct->inventory - $cartItem->quantity;
-                $this->db->update('vendorproduct', ['inventory' => $newInventory2], ['id' => $vendorProduct->id]);
-                $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
-            } else {
+           
                 $this->db->insert("orderitem", ['order_id' => $orderId, 'branchProductId' => $cartItem->branchProductId, 'quantity' => $cartItem->quantity, 'price' => $cartItem->price]);
 
                 $newInventory = $branchProduct->inventory - $cartItem->quantity;
 
                 $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $branchProduct->id]);
-            }
         }
 
         $this->db->set('total', 'total + ' . $data['amountPaid'], false);
