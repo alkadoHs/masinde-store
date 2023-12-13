@@ -142,7 +142,7 @@ class VendorProduct extends CI_Controller
     {
         $branchId = $this->session->userdata('branchId');
 
-        $vendor_products = $this->db->select("vp.*, p.name, bp.inventory as bp_inventory, u.name as vendor")
+        $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, p.name, bp.inventory as bp_inventory, u.name as vendor")
             ->from('vendorproduct vp')
             ->join('branchproduct bp', 'vp.branchProductId = bp.id')
             ->join('product p', 'bp.productId = p.id')
