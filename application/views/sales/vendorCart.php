@@ -138,7 +138,7 @@
                     </button>
                 </div>
             </div>
-            <div class="overflow-auto">
+            <div class="overflow-auto whitespace-nowrap">
                 <table id="updateTable" class="border-collapse border border-slate-400 w-full rounded my-4">
                     <thead>
                         <tr>
