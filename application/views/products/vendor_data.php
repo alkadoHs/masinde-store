@@ -57,7 +57,7 @@
                         <h2 class="text-2xl text-gray-700 font-semibold">Vendor Data</h2>
                         <p class="text-gray-400">Track what your vendors are doing here!</p>
                         <div class="overflow-x-auto">
-                            <table id="example">
+                            <table id="example" class="display">
                                 <thead>
                                     <tr>
                                         <th style="font-weight: 400; font-size: small">VENDOR</th>
@@ -82,7 +82,7 @@
                                             <th>
                                                 <?= $orderitem->name ?>
                                             </th>
-                                            <td class="px-4 py-3">
+                                            <td>
                                                 <?= $orderitem->quantity ?>
                                             </td>
                                             <td>
