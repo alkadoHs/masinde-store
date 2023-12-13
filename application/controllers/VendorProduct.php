@@ -145,21 +145,23 @@ class VendorProduct extends CI_Controller
 
         $branch_products = [];
         if($role == 'ADMIN') {
-            $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, vp.createdAt, p.name, bp.inventory as bp_inventory, u.name as vendor")
+            $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, vp.createdAt, b.name as branch, p.name, bp.inventory as bp_inventory, u.name as vendor")
                 ->from('vendorproduct vp')
                 ->join('branchproduct bp', 'vp.branchProductId = bp.id')
                 ->join('product p', 'bp.productId = p.id')
-                ->order_by('vp.createdAt', 'DESC')
                 ->join('user u', 'vp.userId = u.id')
+                ->join('branch b', 'vp.branchId = b.id')
+                ->order_by('vp.createdAt', 'DESC')
                 ->where('vp.status', 'approved')
                 ->get()->result();
         } else {
-            $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, vp.createdAt, p.name, bp.inventory as bp_inventory, u.name as vendor")
+            $vendor_products = $this->db->select("vp.id, vp.quantity, vp.inventory, vp.createdAt,b.name as branch, p.name, bp.inventory as bp_inventory, u.name as vendor")
                 ->from('vendorproduct vp')
                 ->join('branchproduct bp', 'vp.branchProductId = bp.id')
                 ->join('product p', 'bp.productId = p.id')
-                ->order_by('vp.createdAt', 'DESC')
                 ->join('user u', 'vp.userId = u.id')
+                ->join('branch b', 'vp.branchId = b.id')
+                ->order_by('vp.createdAt', 'DESC')
                 ->where('vp.branchId', $branchId)
                 ->where('vp.status', 'approved')
                 ->get()->result();
