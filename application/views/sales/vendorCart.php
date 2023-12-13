@@ -5,7 +5,7 @@
     <section class="bg-gray-50 dark:bg-gray-900">
         <!-- ALERTS -->
         <div class="mx-auto max-w-screen-xl lg:px-6">
-            <h2 class="text-2xl font-bold my-3">vendorCart Products</h2>
+            <h2 class="text-2xl font-bold my-3">Sell Products</h2>
             <?php if ($this->session->flashdata('exceed_stock')): ?>
                 <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
                     role="alert">
@@ -256,7 +256,7 @@
                                         </div>
 
                                         <button type="submit"
-                                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800">vendorCart</button>
+                                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sell</button>
                                         <?php echo form_close() ?>
                                     </div>
                                 </div>
