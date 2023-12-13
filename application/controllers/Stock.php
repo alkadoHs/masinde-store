@@ -239,20 +239,20 @@ class Stock extends CI_Controller
             $this->db->trans_start();
             $newStock = $this->db->get_where('transferedproduct', ['id' => $ids[$i]])->row();
             $product = $this->db->get_where('branchproduct', ['id' => $newStock->branchProductId])->row();
-            if ($product) {
-                $newInventory = $product->inventory - $newStock->quantity;
-                //update the fom branch stock
-                $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $product->id]);
+            $newInventory = $product->inventory - $newStock->quantity;
+            //update the fom branch stock
+            $this->db->update('branchproduct', ['inventory' => $newInventory], ['id' => $newStock->branchProductId]);
 
-                //increment to branch stock
-                $product2 = $this->db->get_where('branchproduct', ['productId' => $product->productId, 'branchId' => 2])->row();
+            //increment to branch stock
+            $product2 = $this->db->get_where('branchproduct', ['productId' => $product->productId, 'branchId' => $newStock->toBranchId])->row();
+            if ($product2) {
                 $newInventory2 = $product2->inventory + $newStock->quantity;
-                $this->db->update('branchproduct', ['quantity' => $newInventory2, 'inventory' => $newInventory2], ['branchId' => 2, 'productId' => $product->productId]);
+                $this->db->update('branchproduct', ['quantity' => $newInventory2, 'inventory' => $newInventory2], ['branchId' => $newStock->toBranchId, 'productId' => $product2->productId]);
+                $this->db->update('transferedproduct', ['status' => 'confirmed', 'userId' => $userId], ['id' => $ids[$i]]);
             } else {
                 $this->session->set_flashdata('product_not_availabele', "kuna bidhaa ambayo haijasajiliwa kwenye UYOLE SHOP.");
                 break;
             }
-            $this->db->update('transferedproduct', ['status' => 'confirmed', 'userId' => $userId], ['id' => $ids[$i]]);
 
             $this->db->trans_complete();
         }
@@ -326,13 +326,13 @@ class Stock extends CI_Controller
 
     }
 
-    public function cancel_stock_return($id) 
+    public function cancel_stock_return($id)
     {
         $this->db->delete('stock_return', ['id' => $id]);
         $this->session->set_flashdata('stock_return_deleted', 'Item cancelled successifuly!');
-        
+
         redirect('vendorProduct/stock_return');
-        
+
     }
 
 }
