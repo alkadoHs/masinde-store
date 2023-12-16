@@ -1,21 +1,20 @@
-CREATE TABLE `masinde_store`.`vendorcartitem` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `vendorProductId` INT NOT NULL,
-  `cartId` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` INT NULL,
-  `quantity` INT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `vci_vp_fkey`
-    FOREIGN KEY (`vendorProductId`)
-    REFERENCES `masinde_store`.`vendorproduct` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `vci_cart_fkey`
-    FOREIGN KEY (`cartId`)
-    REFERENCES `masinde_store`.`cart` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE);
+ALTER TABLE `masinde_store`.`order` 
+DROP FOREIGN KEY `Order_userId_fkey`;
+ALTER TABLE `masinde_store`.`order` 
+CHANGE COLUMN `userId` `userId` VARCHAR(191) NULL ;
+ALTER TABLE `masinde_store`.`order` 
+ADD CONSTRAINT `Order_userId_fkey`
+  FOREIGN KEY (`userId`)
+  REFERENCES `masinde_store`.`user` (`id`)
+  ON DELETE SET NULL
+  ON UPDATE CASCADE;
 
 
-DELETE FROM `masinde_store`.`sales` WHERE (`id` = '2');
-DELETE FROM `masinde_store`.`sales` WHERE (`id` = '3');
+  ALTER TABLE `masinde_store`.`branchproduct` 
+DROP FOREIGN KEY `BranchProduct_productId_fkey`;
+ALTER TABLE `masinde_store`.`branchproduct` 
+ADD CONSTRAINT `BranchProduct_productId_fkey`
+  FOREIGN KEY (`productId`)
+  REFERENCES `masinde_store`.`product` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;

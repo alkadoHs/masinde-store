@@ -41,15 +41,15 @@ class Product extends CI_Controller
 
     public function update()
     {
+        $id = $this->input->post('id');
         $input_data = [
-            'id' => $this->input->post('id'), 
             'name' => $this->input->post('name'),
             'buyPrice' => $this->input->post('buyPrice'),
             'retailPrice' => $this->input->post('retailPrice'),
             'wholePrice' => $this->input->post('wholePrice'),
         ];
 
-        $this->db->replace('product', $input_data);
+        $this->db->update('product', $input_data, ['id' => $id]);
 
         $this->session->set_flashdata('update_product_success', 'Product updated successfully!');
         redirect('Product/index');
