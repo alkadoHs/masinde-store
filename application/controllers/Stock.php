@@ -300,17 +300,21 @@ class Stock extends CI_Controller
             $this->db->set('inventory', 'inventory - ' . $quantities[$i], false);
             $this->db->where('id', $vp_ids[$i]);
             $this->db->update('vendorproduct');
-            // $branchProduct = $this->db->select('sr. ,bp.id as pb_id, bp.productId')
-            //                          ->from('stock_return sr')
-            //                          ->join('vendorproduct vp', 'sr.vendorProductId = vp.id')
-            //                          ->join('branchproduct bp', 'vp.branchProductId = bp.id')
-            //                          ->where('sr.id', $ids[$i])
-            //                          ->get()->row();
 
-            // $branchProductExist = $this->db->get_where('branchproduct', ['branchId', $this->session->userdata('branchId'), 'productId' => $branchProduct->productId ])->row();
+            $sr = $this->db->get_where('stock_return', ['id' => $ids[$i]])->row();
+            $vp = $this->db->get_where('vendorproduct', ['id' => $vp_ids[$i]])->row();
+            $bp = $this->db->get_where('branchproduct', ['id' => $vp->branchProductId])->row();
 
-            // if($branchProductExist) {
-            // }
+            $bpExist = $this->db->get_where('branchproduct', ['branchId', $sr->branchId, 'productId' => $bp->productId])->row();
+
+            if($bpExist) {
+                $this->db->set('inventory', 'inventory + ' . $quantities[$i], false);
+                $this->db->where('productId', $bp->productId);
+                $this->db->where('branchId', $sr->branchId);
+                $this->db->update('branchproduct');
+            } else {
+                $this->db->insert('branchproduct', ['productId'=>$bp->productId, 'branchId'=>$sr->branchId, 'damages'=>0, 'quantity' => $sr->quantity, 'inventory' => $sr->quantity, 'stockLimit' => 100]);
+            }
             $this->db->trans_complete();
         }
 

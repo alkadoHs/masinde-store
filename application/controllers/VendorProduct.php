@@ -180,10 +180,6 @@ class VendorProduct extends CI_Controller
 
         $userId = $this->session->userdata("userId");
 
-        if (empty($userId)) {
-            return redirect("login");
-        }
-
         $products = $this->db->select('p.name, vp.id, vp.inventory')
             ->from('vendorproduct vp')
             ->join('branchproduct bp', 'vp.branchProductId = bp.id')
