@@ -13,7 +13,7 @@
   }
 
   foreach ($orders as $order) {
-    $totalRevenue += $order["total"];
+    $totalRevenue += $order["paid"];
 
     foreach ($order["orderItems"] as $orderitem) {
         $totalProfit += $orderitem["profit"];
